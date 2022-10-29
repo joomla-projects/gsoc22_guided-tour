@@ -48,12 +48,9 @@ $this->useCoreUI = true;
                 <?php echo $this->form->renderField('step-no'); ?>
                 <?php echo $this->form->renderField('position'); ?>
                 <?php echo $this->form->renderField('target'); ?>
-                <?php echo $this->form->renderField('type'); ?>
+                <?php echo $this->form->renderField('redirection'); ?>
                 <?php echo $this->form->renderField('url'); ?>
-                <?php echo $this->form->renderField('interactionwithformfields'); ?>
-                <?php echo $this->form->renderField('novalidation'); ?>
-                <?php echo $this->form->renderField('validationbyvalue'); ?>
-                <?php echo $this->form->renderField('validationbyspecificvalue'); ?>
+                <?php echo $this->form->renderField('interactive'); ?>
                 <?php $this->form->setValue('tour_id', null, $tour_id); ?>
                 <?php echo $this->form->renderField('tour_id'); ?>
 

@@ -981,8 +981,8 @@ CREATE TABLE IF NOT EXISTS `#__guidedtour_steps` (
   `step-no` int NOT NULL DEFAULT 0,
   `position` varchar(255) NOT NULL,
   `target` varchar(255) NOT NULL,
-  `type` int NOT NULL,
-  `validation` int NOT NULL,
+  `redirection` int NOT NULL,
+  `interactive` int NOT NULL,
   `url` varchar(255) NOT NULL,
   `created` datetime NOT NULL,
   `created_by` int unsigned NOT NULL DEFAULT 0,
@@ -998,7 +998,7 @@ CREATE TABLE IF NOT EXISTS `#__guidedtour_steps` (
 -- Dumping data for table `#__guidedtour_steps`
 --
 
-INSERT INTO `#__guidedtour_steps` (`id`, `tour_id`, `title`, `published`, `description`, `ordering`, `step-no`, `position`, `target`, `type`, `validation`, `url`, `created`, `created_by`, `modified`, `modified_by`) VALUES
+INSERT INTO `#__guidedtour_steps` (`id`, `tour_id`, `title`, `published`, `description`, `ordering`, `step-no`, `position`, `target`, `redirection`, `interactive`, `url`, `created`, `created_by`, `modified`, `modified_by`) VALUES
 (1, 1, 'Click here!', 1, '<p>This Tour will show you how you can create a Guided Tour in the Joomla Backend!</p>', 0, 1, 'bottom', '.button-new', 1, 1, 'administrator/index.php?option=com_guidedtours&view=tours', CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP(), 0),
 (2, 1, 'Add title for your Tour', 1, '<p>Here you have to add the title of your Tour Step.</p>', 0, 1, 'bottom', '#jform_title', 1, 1, 'administrator/index.php?option=com_guidedtours&view=tour&layout=edit', CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP(), 0),
 (3, 1, 'Add Content', 1, '<p>Add the content of your Tour here!</p>', 0, 1, 'bottom', '#details', 1, 1, 'administrator/index.php?option=com_guidedtours&view=tour&layout=edit', CURRENT_TIMESTAMP(), 0, CURRENT_TIMESTAMP(), 0),
