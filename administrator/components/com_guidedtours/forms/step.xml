@@ -84,7 +84,6 @@
 		label="COM_GUIDEDTOURS_TYPE_LABEL"
 		default="0"
 		description="COM_GUIDEDTOURS_TYPE_DESC"		
-		filter="word"
 		validate="options"
 		>
 		<option value="0">COM_GUIDEDTOURS_FIELD_VALUE_NEXT_STEP</option>

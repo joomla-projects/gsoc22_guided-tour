@@ -3,7 +3,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-function checkAndRedirect(redirectUrl) {
+ function checkAndRedirect(redirectUrl) {
   var currentURL = window.location.href;
   if (currentURL != redirectUrl) {
     window.location.href = redirectUrl;
@@ -39,6 +39,7 @@ function addStepToTourButton(tour, obj, tourId, index, buttons, uri) {
       on: obj[tourId].steps[index].position,
       url: obj[tourId].steps[index].url,
       type: obj[tourId].steps[index].type,
+      interactivetour: obj[tourId].steps[index].interactivetour,
     },
 
     buttons: buttons,
@@ -136,6 +137,15 @@ Joomla = window.Joomla || {};
           for (index = 0; index < obj[tourId].steps.length; index++) {
             var buttons = [];
             var len = obj[tourId].steps.length;
+
+            if(obj[tourId] && obj[tourId].steps[index].target) {
+            const ele = document.querySelector(obj[tourId].steps[index].target);
+
+            if(ele) {
+             ele.addEventListener("click", tour.next, tour.next);
+            }
+          }
+     
             pushBackButton(buttons, tour, prev_step);
             if (index != len - 1) {
               pushNextButton(buttons, tour);
@@ -171,6 +181,13 @@ Joomla = window.Joomla || {};
         var len = obj[tourId].steps.length;
 
         pushBackButton(buttons, tour, prev_step);
+
+        if(obj[tourId] && obj[tourId].steps[index].target) {
+        const ele = document.querySelector(obj[tourId].steps[index].target);
+        if(ele) {
+        ele.addEventListener("click", tour.next, tour.next);
+        }
+      }
 
         if (index != len - 1) {
           pushNextButton(buttons, tour);
