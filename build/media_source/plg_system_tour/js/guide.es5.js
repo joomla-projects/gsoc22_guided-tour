@@ -148,7 +148,8 @@ Joomla = window.Joomla || {};
      
             pushBackButton(buttons, tour, prev_step);
             if (index != len - 1) {
-              pushNextButton(buttons, tour);
+              if(obj[tourId] && obj[tourId].steps[index].type!==2 || obj[tourId] && obj[tourId].steps[index].interactivetour==2)
+                pushNextButton(buttons, tour);
             } else {
               pushCompleteButton(buttons, tour);
             }
@@ -190,7 +191,8 @@ Joomla = window.Joomla || {};
       }
 
         if (index != len - 1) {
-          pushNextButton(buttons, tour);
+          if(obj[tourId] && obj[tourId].steps[index].type!==2 || obj[tourId] && obj[tourId].steps[index].interactivetour==2)
+                pushNextButton(buttons, tour);
         } else {
           pushCompleteButton(buttons, tour);
         }
