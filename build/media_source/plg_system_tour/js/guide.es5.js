@@ -3,7 +3,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
- function checkAndRedirect(redirectUrl) {
+function checkAndRedirect(redirectUrl) {
   var currentURL = window.location.href;
   if (currentURL != redirectUrl) {
     window.location.href = redirectUrl;
@@ -51,7 +51,7 @@ function addStepToTourButton(tour, obj, tourId, index, buttons, uri) {
         var currentstepIndex = `${tour.currentStep.id}` - "0";
         sessionStorage.setItem("currentStepId", currentstepIndex);
         if (obj[tourId].steps[index].type == 1) {
-        checkAndRedirect(uri + tour.currentStep.options.attachTo.url);
+          checkAndRedirect(uri + tour.currentStep.options.attachTo.url);
         }
       },
     },
@@ -85,26 +85,30 @@ function pushCompleteButton(buttons, tour) {
     },
   });
 }
-function pushNextButton(buttons, tour) {
+function pushNextButton(buttons, tour, disabled = false) {
   buttons.push({
     text: "Next",
-    classes: "shepherd-button-primary",
+    classes: "shepherd-button-primary step-next-button",
     action: function () {
       return tour.next();
     },
+    disabled: disabled,
   });
+}
+function enableButton() {
+  const ele = document.querySelector(".step-next-button");
+  ele.removeAttribute("disabled");
 }
 function pushBackButton(buttons, tour, prev_step) {
   buttons.push({
     text: "Back",
     classes: "shepherd-button-secondary",
     action: function () {
-      if(prev_step)
-      {
-        const paths = Joomla.getOptions('system.paths');
+      if (prev_step) {
+        const paths = Joomla.getOptions("system.paths");
         sessionStorage.setItem("currentStepId", prev_step.id);
         if (prev_step.type == 1) {
-        checkAndRedirect(paths.rootFull + prev_step.url);
+          checkAndRedirect(paths.rootFull + prev_step.url);
         }
       }
       return tour.back();
@@ -115,7 +119,7 @@ function pushBackButton(buttons, tour, prev_step) {
 Joomla = window.Joomla || {};
 (function (Joomla, window) {
   document.addEventListener("DOMContentLoaded", function () {
-    const paths = Joomla.getOptions('system.paths');
+    const paths = Joomla.getOptions("system.paths");
     const uri = paths.rootFull;
 
     let myTours = Joomla.getOptions("myTours");
@@ -132,24 +136,47 @@ Joomla = window.Joomla || {};
         const tour = createTour();
 
         if (sessionStorage.getItem("tourId")) {
-          let prev_step = '';
+          let prev_step = "";
           addInitialStepToTourButton(tour, obj, tourId);
           for (index = 0; index < obj[tourId].steps.length; index++) {
             var buttons = [];
             var len = obj[tourId].steps.length;
 
-            if(obj[tourId] && obj[tourId].steps[index].target) {
-            const ele = document.querySelector(obj[tourId].steps[index].target);
+            if (
+              obj[tourId] &&
+              obj[tourId].steps[index].target &&
+              obj[tourId] &&
+              obj[tourId].steps[index].type == 2
+            ) {
+              const ele = document.querySelector(
+                obj[tourId].steps[index].target
+              );
 
-            if(ele) {
-             ele.addEventListener("click", tour.next, tour.next);
+              if (ele) {
+                if (
+                  obj[tourId] &&
+                  obj[tourId].steps[index].interactivetour === 2
+                ) {
+                  ele.addEventListener("input", enableButton, enableButton);
+                }
+                if (
+                  obj[tourId] &&
+                  obj[tourId].steps[index].interactivetour === 1
+                )
+                  ele.addEventListener("click", tour.next, tour.next);
+              }
             }
-          }
-     
+
             pushBackButton(buttons, tour, prev_step);
             if (index != len - 1) {
-              if(obj[tourId] && obj[tourId].steps[index].type!==2 || obj[tourId] && obj[tourId].steps[index].interactivetour==2)
-                pushNextButton(buttons, tour);
+              let disabled = false;
+              if (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+                disabled = true;
+              if (
+                (obj[tourId] && obj[tourId].steps[index].type !== 2) ||
+                (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+              )
+                pushNextButton(buttons, tour, disabled);
             } else {
               pushCompleteButton(buttons, tour);
             }
@@ -163,7 +190,7 @@ Joomla = window.Joomla || {};
     }
     var tourId = sessionStorage.getItem("tourId");
     var currentStepId = sessionStorage.getItem("currentStepId");
-    let prev_step = '';
+    let prev_step = "";
 
     if (tourId) {
       tourId = obj.findIndex((x) => x.id == tourId);
@@ -171,8 +198,8 @@ Joomla = window.Joomla || {};
       var ind = 0;
       if (currentStepId) {
         ind = obj[tourId].steps.findIndex((x) => x.id == currentStepId);
-        if( ind > 0){
-          prev_step = obj[tourId].steps[ind-1]
+        if (ind > 0) {
+          prev_step = obj[tourId].steps[ind - 1];
         }
       } else {
         ind = 0;
@@ -183,16 +210,31 @@ Joomla = window.Joomla || {};
 
         pushBackButton(buttons, tour, prev_step);
 
-        if(obj[tourId] && obj[tourId].steps[index].target) {
-        const ele = document.querySelector(obj[tourId].steps[index].target);
-        if(ele) {
-        ele.addEventListener("click", tour.next, tour.next);
+        if (
+          obj[tourId] &&
+          obj[tourId].steps[index].target &&
+          obj[tourId] &&
+          obj[tourId].steps[index].type == 2
+        ) {
+          const ele = document.querySelector(obj[tourId].steps[index].target);
+          if (ele) {
+            if (obj[tourId] && obj[tourId].steps[index].interactivetour === 2) {
+              ele.addEventListener("input", enableButton, enableButton);
+            }
+            if (obj[tourId] && obj[tourId].steps[index].interactivetour === 1)
+              ele.addEventListener("click", tour.next, tour.next);
+          }
         }
-      }
 
         if (index != len - 1) {
-          if(obj[tourId] && obj[tourId].steps[index].type!==2 || obj[tourId] && obj[tourId].steps[index].interactivetour==2)
-                pushNextButton(buttons, tour);
+          let disabled = false;
+          if (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+            disabled = true;
+          if (
+            (obj[tourId] && obj[tourId].steps[index].type !== 2) ||
+            (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+          )
+            pushNextButton(buttons, tour, disabled);
         } else {
           pushCompleteButton(buttons, tour);
         }
