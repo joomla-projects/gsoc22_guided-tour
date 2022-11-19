@@ -111,6 +111,7 @@
 		>
 		<option value="1">COM_GUIDEDTOURS_TYPE_INTERACTIVE_TOUR_BUTTON_LABEL</option>
 		<option value="2">COM_GUIDEDTOURS_TYPE_INTERACTIVE_TOUR_TEXT_FIELD_LABEL</option>
+		<option value="3">COM_GUIDEDTOURS_TYPE_INTERACTIVE_TOUR_OTHERS_LABEL</option>
 	</field>
 
 	<field

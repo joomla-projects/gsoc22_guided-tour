@@ -174,7 +174,9 @@ Joomla = window.Joomla || {};
                 disabled = true;
               if (
                 (obj[tourId] && obj[tourId].steps[index].type !== 2) ||
-                (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+                (obj[tourId] &&
+                  obj[tourId].steps[index].interactivetour == 2) ||
+                (obj[tourId] && obj[tourId].steps[index].interactivetour == 3)
               )
                 pushNextButton(buttons, tour, disabled);
             } else {
@@ -232,7 +234,8 @@ Joomla = window.Joomla || {};
             disabled = true;
           if (
             (obj[tourId] && obj[tourId].steps[index].type !== 2) ||
-            (obj[tourId] && obj[tourId].steps[index].interactivetour == 2)
+            (obj[tourId] && obj[tourId].steps[index].interactivetour == 2) ||
+            (obj[tourId] && obj[tourId].steps[index].interactivetour == 3)
           )
             pushNextButton(buttons, tour, disabled);
         } else {
