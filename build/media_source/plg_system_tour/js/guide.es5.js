@@ -85,18 +85,20 @@ function pushCompleteButton(buttons, tour) {
     },
   });
 }
-function pushNextButton(buttons, tour, disabled = false) {
+function pushNextButton(buttons, tour, step_id, disabled = false) {
   buttons.push({
     text: "Next",
-    classes: "shepherd-button-primary step-next-button",
+    classes: `shepherd-button-primary step-next-button-${step_id}`,
     action: function () {
       return tour.next();
     },
     disabled: disabled,
   });
 }
-function enableButton() {
-  const ele = document.querySelector(".step-next-button");
+function enableButton(e) {
+  const ele = document.querySelector(
+    `.step-next-button-${e.currentTarget.step_id}`
+  );
   ele.removeAttribute("disabled");
 }
 function pushBackButton(buttons, tour, prev_step) {
@@ -157,6 +159,7 @@ Joomla = window.Joomla || {};
                   obj[tourId] &&
                   obj[tourId].steps[index].interactivetour === 2
                 ) {
+                  ele.step_id = index;
                   ele.addEventListener("input", enableButton, enableButton);
                 }
                 if (
@@ -178,7 +181,7 @@ Joomla = window.Joomla || {};
                   obj[tourId].steps[index].interactivetour == 2) ||
                 (obj[tourId] && obj[tourId].steps[index].interactivetour == 3)
               )
-                pushNextButton(buttons, tour, disabled);
+                pushNextButton(buttons, tour, index, disabled);
             } else {
               pushCompleteButton(buttons, tour);
             }
@@ -221,6 +224,7 @@ Joomla = window.Joomla || {};
           const ele = document.querySelector(obj[tourId].steps[index].target);
           if (ele) {
             if (obj[tourId] && obj[tourId].steps[index].interactivetour === 2) {
+              ele.step_id = index;
               ele.addEventListener("input", enableButton, enableButton);
             }
             if (obj[tourId] && obj[tourId].steps[index].interactivetour === 1)
@@ -237,7 +241,7 @@ Joomla = window.Joomla || {};
             (obj[tourId] && obj[tourId].steps[index].interactivetour == 2) ||
             (obj[tourId] && obj[tourId].steps[index].interactivetour == 3)
           )
-            pushNextButton(buttons, tour, disabled);
+            pushNextButton(buttons, tour, index, disabled);
         } else {
           pushCompleteButton(buttons, tour);
         }
