@@ -37,7 +37,7 @@ INSERT INTO "#__guidedtours" ("id", "asset_id", "title", "description", "orderin
 (10, 0, 'How to create Users?', '<p>This will show youhow you can create Users in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1)
 ON CONFLICT DO NOTHING;
 
-SELECT setval('#__guidedtours_id_seq', 2, false);
+SELECT setval('#__guidedtours_id_seq', 11, false);
 
 -- --------------------------------------------------------
 
@@ -185,7 +185,7 @@ INSERT INTO "#__guidedtour_steps" ("id", "tour_id", "title", "published", "descr
 (101, 10, 'Congratulations!!!', 1, '<p>You successfully created your User in Joomla!</p>', 0, 1, 'bottom', '', 0, 1, 'administrator/index.php?option=com_users&view=user&layout=edit', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0)
 ON CONFLICT DO NOTHING;
 
-SELECT setval('#__guidedtour_steps_id_seq', 16, false);
+SELECT setval('#__guidedtour_steps_id_seq', 102, false);
 
 -- Add new `#__extensions`
 INSERT INTO "#__extensions" ("package_id", "name", "type", "element", "folder", "client_id", "enabled", "access", "protected", "locked", "manifest_cache", "params", "custom_data", "ordering", "state") VALUES

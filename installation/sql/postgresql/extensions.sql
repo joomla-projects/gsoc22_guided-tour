@@ -929,7 +929,7 @@ INSERT INTO "#__guidedtours" ("id", "asset_id", "title", "description", "orderin
 (9, 102, 'How to create Smart Search?', '<p>This Tour will show you how you can create Smart Search in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_finder&view=filters', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1),
 (10, 103, 'How to create Users?', '<p>This will show youhow you can create Users in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1);
 
-SELECT setval('#__guidedtours_id_seq', 2, false);
+SELECT setval('#__guidedtours_id_seq', 11, false);
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1076,7 @@ INSERT INTO "#__guidedtour_steps" ("id", "tour_id", "title", "published", "descr
 (100, 10, 'Save and Close ', 1, '<p>Save and close the User.</p>', 0, 1, 'bottom', '#save-group-children-save', 2, 1, 'administrator/index.php?option=com_users&view=user&layout=edit', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0),
 (101, 10, 'Congratulations!!!', 1, '<p>You successfully created your User in Joomla!</p>', 0, 1, 'bottom', '', 0, 1, 'administrator/index.php?option=com_users&view=user&layout=edit', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0);
 
-SELECT setval('#__guidedtour_steps_id_seq', 16, false);
+SELECT setval('#__guidedtour_steps_id_seq', 102, false);
 
 -- --------------------------------------------------------
 
