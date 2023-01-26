@@ -39,7 +39,7 @@ INSERT INTO "#__guidedtours" ("id", "asset_id", "title", "description", "orderin
 (7, 0, 'How to create Contacts?', '<p>This Tour will show you how you can create Contacts in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_contact&view=contacts', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 'Default tour'),
 (8, 0, 'How to create News Feeds?', '<p>This Tour will show you how you can create News Feeds in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_newsfeeds&view=newsfeeds', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 'Default tour'),
 (9, 0, 'How to create Smart Search?', '<p>This Tour will show you how you can create Smart Search in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_finder&view=filters', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 'Default tour'),
-(10, 0, 'How to create Users?', '<p>This will show youhow you can create Users in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 'Default tour')
+(10, 0, 'How to create Users?', '<p>This will show you how you can create Users in Joomla!</p>', 0, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 'Default tour')
 ON CONFLICT DO NOTHING;
 
 SELECT setval('#__guidedtours_id_seq', 11, false);
