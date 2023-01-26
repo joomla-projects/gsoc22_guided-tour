@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `#__guidedtours` (
   `published` tinyint NOT NULL DEFAULT 0,
   `language` varchar(7) NOT NULL,
   `note` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
   KEY `idx_state` (`published`),
   KEY `idx_language` (`language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
