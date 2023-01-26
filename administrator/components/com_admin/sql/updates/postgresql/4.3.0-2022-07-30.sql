@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS "#__guidedtour_steps" (
   "modified" timestamp without time zone NOT NULL,
   "modified_by" bigint DEFAULT 0 NOT NULL,
   "checked_out_time" timestamp without time zone,
-  "checked_out" integer,,
+  "checked_out" integer,
   "language" varchar(7) DEFAULT '' NOT NULL,
   "note" varchar(255) DEFAULT '' NOT NULL,
   PRIMARY KEY ("id")
