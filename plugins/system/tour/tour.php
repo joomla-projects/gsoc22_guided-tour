@@ -66,13 +66,13 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     {
         $tour_id = $this->app->getInput()->getString('tour_id', -1);
         if ($tour_id < 0) {
-            echo json_encode(new stdClass);
+            echo json_encode(new stdClass());
         } else {
             $json_tour = $this->getJsonTour($tour_id);
             if (!$json_tour) {
                 $this->app->setUserState('com_guidedtours.tour.id', -1);
 
-                echo json_encode(new stdClass);
+                echo json_encode(new stdClass());
             } else {
                 $this->app->setUserState('com_guidedtours.tour.id', $tour_id);
 
@@ -92,7 +92,6 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     {
         // Run in backend
         if ($this->app->isClient('administrator')) {
-
             $tour_id = $this->app->getUserState('com_guidedtours.tour.id', -1);
             if ($tour_id < 0) {
                 return;
@@ -151,7 +150,6 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     public function onBeforeCompileHead()
     {
         if ($this->app->isClient('administrator')) {
-
             $tour_id = $this->app->getUserState('com_guidedtours.tour.id', -1);
             if ($tour_id < 0) {
                 return;
