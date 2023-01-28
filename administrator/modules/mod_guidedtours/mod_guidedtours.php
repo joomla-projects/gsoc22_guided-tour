@@ -10,10 +10,14 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Module\GuidedTours\Administrator\Helper\GuidedToursHelper;
+
+if (!PluginHelper::isEnabled('system', 'tour')) {
+    return;
+}
 
 $tours = GuidedToursHelper::getList($params);
 
