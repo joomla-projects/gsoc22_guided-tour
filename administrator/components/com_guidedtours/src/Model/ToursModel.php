@@ -70,7 +70,14 @@ class ToursModel extends ListModel
         $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', null, 'cmd');
 
         $this->setState('filter.extension', $extension);
-        $parts = explode('.', $extension);
+
+        /** Note: threw depreciation error fixed by code below
+         *
+         * $parts = explode('.', $extension);
+         *
+         */
+
+        $parts = explode(',', $result['comp_uids'] ?? '');
 
         // Extract the component name
         $this->setState('filter.component', $parts[0]);
@@ -174,7 +181,7 @@ class ToursModel extends ListModel
                 $search = '%' . str_replace(' ', '%', trim($search)) . '%';
                 $query->where(
                     '(' . $db->quoteName('a.title') . ' LIKE :search1 OR ' . $db->quoteName('a.id') . ' LIKE :search2'
-                        . ' OR ' . $db->quoteName('a.description') . ' LIKE :search3)'
+                    . ' OR ' . $db->quoteName('a.description') . ' LIKE :search3)'
                 )
                     ->bind([':search1', ':search2', ':search3'], $search);
             }
