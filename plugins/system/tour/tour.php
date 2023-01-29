@@ -150,11 +150,6 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     public function onBeforeCompileHead()
     {
         if ($this->app->isClient('administrator')) {
-            $tour_id = $this->app->getUserState('com_guidedtours.tour.id', -1);
-            if ($tour_id < 0) {
-                return;
-            }
-
             // Load required assets
             $assets = $this->app->getDocument()->getWebAssetManager();
             $assets->usePreset('shepherdjs');
