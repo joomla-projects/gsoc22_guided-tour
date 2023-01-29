@@ -39,6 +39,7 @@ $this->useCoreUI = true;
     <?php echo LayoutHelper::render('joomla.edit.title_alias', $this); ?>
     <div>
         <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
+
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('Details')); ?>
         <div class="row">
             <div class="col-md-9">
@@ -70,20 +71,21 @@ $this->useCoreUI = true;
                     </div>
                 </fieldset>
             </div>
-            <?php echo HTMLHelper::_('uitab.endTab'); ?>
-            <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('Permissions')); ?>
-            <div class="row">
-                <div class="col-12 col-lg">
-                    <fieldset id="fieldset-rules" class="options-form">
-                        <legend><?php echo Text::_('Permissions'); ?></legend>
-                        <?php echo $this->form->getInput('rules'); ?>
-                    </fieldset>
-                </div>
-                <?php echo HTMLHelper::_('uitab.endTab'); ?>
-            </div>
-
         </div>
-        <input type="hidden" name="task" value="">
-        <input type="hidden" name="tour_id" value="<?php echo $tour_id; ?>">
-        <?php echo HTMLHelper::_('form.token'); ?>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('COM_GUIDEDTOURS_RULES_TAB')); ?>
+        <div class="row">
+            <fieldset id="fieldset-rules" class="options-form">
+                <legend><?php echo Text::_('COM_GUIDEDTOURS_RULES_TAB'); ?></legend>
+                <?php echo $this->form->getInput('rules'); ?>
+            </fieldset>
+            <?php echo HTMLHelper::_('uitab.endTab'); ?>
+            <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+        </div>
+
+    </div>
+    <input type="hidden" name="task" value="">
+    <input type="hidden" name="tour_id" value="<?php echo $tour_id; ?>">
+    <?php echo HTMLHelper::_('form.token'); ?>
 </form>
