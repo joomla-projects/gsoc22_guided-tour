@@ -155,11 +155,9 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
                 return;
             }
 
-            $this->app->getDocument()->getWebAssetManager()
-                ->usePreset('shepherdjs');
-
             // Load required assets
             $assets = $this->app->getDocument()->getWebAssetManager();
+            $assets->usePreset('shepherdjs');
             $assets->registerAndUseScript(
                 'plg_system_tour.script',
                 'plg_system_tour/guide.min.js',
