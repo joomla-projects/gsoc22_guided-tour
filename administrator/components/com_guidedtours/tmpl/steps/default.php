@@ -137,9 +137,8 @@ if ($saveOrder && !empty($this->items)) {
 
                 <!-- Table body begins -->
                 <tbody <?php if ($saveOrder) :
-                ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
-                    <?php echo strtolower($listDirn); ?>" data-nested="true" <?php
-                endif; ?>
+                    ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
+                    <?php echo strtolower($listDirn); ?>" data-nested="true" <?php endif; ?>>
                 <?php foreach ($this->items as $i => $item) :
                     $canCreate = $user->authorise('core.create', 'com_guidedtours');
                     $canEdit = $user->authorise('core.edit', 'com_guidedtours');
