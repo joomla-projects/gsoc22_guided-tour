@@ -120,7 +120,6 @@ if ($saveOrder && !empty($this->items)) {
                             $listOrder
                         ); ?>
                     </th>
-                    <-- Needs to be sorted by TYPE) -->
                     <th scope="col" class="text-center">
                         <?php echo Text::_('COM_GUIDEDTOURS_STEP_TYPE') ?>
                     </th>
