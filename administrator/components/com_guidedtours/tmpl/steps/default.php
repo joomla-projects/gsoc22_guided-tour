@@ -138,11 +138,10 @@ if ($saveOrder && !empty($this->items)) {
 
                 <!-- Table body begins -->
                 <tbody <?php if ($saveOrder) :
-                    ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
+                ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
                     <?php echo strtolower($listDirn); ?>" data-nested="true" <?php
-                endif; ?>>
-                <?php
-                foreach ($this->items as $i => $item) :
+                endif; ?>
+                <?php foreach ($this->items as $i => $item) :
                     $canCreate = $user->authorise('core.create', 'com_guidedtours');
                     $canEdit = $user->authorise('core.edit', 'com_guidedtours');
                     $canChange = $user->authorise('core.edit.state', 'com_guidedtours');
@@ -203,10 +202,10 @@ if ($saveOrder && !empty($this->items)) {
                             <?php endif; ?>
 
                             <span class="small">
-                                    <?php if ($item->note) : ?>
-                                        <?php echo Text::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note)); ?>
-                                    <?php endif; ?>
-                                </span>
+                                <?php if ($item->note) : ?>
+                                    <?php echo Text::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note)); ?>
+                                <?php endif; ?>
+                            </span>
                         </th>
                         <td class="">
                             <?php echo $item->description; ?>
@@ -215,9 +214,9 @@ if ($saveOrder && !empty($this->items)) {
                         <!-- Step Type -->
                         <td class="text-center">
                             <?php
-                            if($item->type == 0) {
+                            if ($item->type == 0) {
                                 echo Text::_('COM_GUIDEDTOURS_STEP_TYPE_NEXT_STEP');
-                            } else if($item->type == 1) {
+                            } elseif ($item->type == 1) {
                                 echo Text::_('COM_GUIDEDTOURS_STEP_TYPE_REDIRECT');
                             } else {
                                 echo Text::_('COM_GUIDEDTOURS_STEP_TYPE_INTERACTIVE_STEP');
