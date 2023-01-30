@@ -9,9 +9,9 @@
 	/>
 
 	<field
-			name="step-no"
-			type="hidden"
-			default="1"
+		name="step_no"
+		type="hidden"
+		default="1"
 	/>
 
 	<field
@@ -26,7 +26,7 @@
 		<option value="right">COM_GUIDEDTOURS_FIELD_OPTION_RIGHT</option>
 		<option value="left">COM_GUIDEDTOURS_FIELD_OPTION_LEFT</option>
 		<option value="">COM_GUIDEDTOURS_FIELD_OPTION_CENTER</option>
-	</field>>
+	</field>
 
 	<field
 			name="target"
@@ -101,7 +101,7 @@
 	/>
 
 	<field
-			name="interactivestep"
+			name="interactive_type"
 			type="list"
 			label="COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_LABEL"
 			description="COM_GUIDEDTOURS_INTERACTIVE_STEP_DESC"
