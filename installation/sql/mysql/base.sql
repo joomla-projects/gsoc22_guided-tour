@@ -84,8 +84,8 @@ INSERT INTO `#__assets` (`id`, `parent_id`, `lft`, `rgt`, `level`, `name`, `titl
 (62, 56, 31, 32, 3, 'com_content.transition.5', 'Feature', '{}'),
 (63, 56, 33, 34, 3, 'com_content.transition.6', 'Unfeature', '{}'),
 (64, 56, 35, 36, 3, 'com_content.transition.7', 'Publish & Feature', '{}'),
-(65, 1, 141, 142, 1, 'com_privacy', 'com_privacy', '{}'),
-(66, 1, 143, 144, 1, 'com_actionlogs', 'com_actionlogs', '{}'),
+(65, 1, 143, 144, 1, 'com_privacy', 'com_privacy', '{}'),
+(66, 1, 145, 146, 1, 'com_actionlogs', 'com_actionlogs', '{}'),
 (67, 18, 74, 75, 2, 'com_modules.module.88', 'Latest Actions', '{}'),
 (68, 18, 76, 77, 2, 'com_modules.module.89', 'Privacy Dashboard', '{}'),
 (70, 18, 88, 89, 2, 'com_modules.module.103', 'Site', '{}'),
@@ -107,8 +107,9 @@ INSERT INTO `#__assets` (`id`, `parent_id`, `lft`, `rgt`, `level`, `name`, `titl
 (87, 18, 124, 125, 2, 'com_modules.module.97', 'Recently Added Articles', '{}'),
 (88, 18, 126, 127, 2, 'com_modules.module.98', 'Logged-in Users', '{}'),
 (89, 18, 128, 129, 2, 'com_modules.module.90', 'Login Support', '{}'),
-(90, 1, 163, 164, 1, 'com_scheduler', 'com_scheduler', '{}'),
-(91, 1, 165, 166, 1, 'com_guidedtours.guidedtours.1', 'com_guidedtours', '{}');
+(90, 1, 165, 166, 1, 'com_scheduler', 'com_scheduler', '{}'),
+(91, 1, 167, 168, 1, 'com_guidedtours.guidedtours.1', 'com_guidedtours', '{}'),
+(92, 18, 130, 131, 2, 'com_modules.module.109', 'Guided Tours', '{}');
 
 -- --------------------------------------------------------
 
