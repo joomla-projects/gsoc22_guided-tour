@@ -10,6 +10,7 @@
  * @phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
  */
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\Event\SubscriberInterface;
 
@@ -66,16 +67,15 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     {
         $tour_id = $this->app->getInput()->getString('tour_id', -1);
         if ($tour_id < 0) {
+            $this->app->setUserState('com_guidedtours.tour.id', -1);
             echo json_encode(new stdClass());
         } else {
             $json_tour = $this->getJsonTour($tour_id);
             if (!$json_tour) {
                 $this->app->setUserState('com_guidedtours.tour.id', -1);
-
                 echo json_encode(new stdClass());
             } else {
                 $this->app->setUserState('com_guidedtours.tour.id', $tour_id);
-
                 echo $json_tour;
             }
         }
@@ -90,16 +90,18 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
      */
     public function onBeforeRender()
     {
-        // Run in backend
         if ($this->app->isClient('administrator')) {
             $tour_id = $this->app->getUserState('com_guidedtours.tour.id', -1);
             if ($tour_id < 0) {
+                $this->app->setUserState('com_guidedtours.tour.id', -1);
+                $this->app->getDocument()->addScriptOptions('myTour', '');
                 return;
             }
 
             $json_tour = $this->getJsonTour($tour_id);
             if (!$json_tour) {
                 $this->app->setUserState('com_guidedtours.tour.id', -1);
+                $this->app->getDocument()->addScriptOptions('myTour', '');
                 return;
             }
 
@@ -150,6 +152,11 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
     public function onBeforeCompileHead()
     {
         if ($this->app->isClient('administrator')) {
+            Text::script('PLG_SYSTEM_TOUR_START');
+            Text::script('PLG_SYSTEM_TOUR_COMPLETE');
+            Text::script('PLG_SYSTEM_TOUR_NEXT');
+            Text::script('PLG_SYSTEM_TOUR_BACK');
+
             // Load required assets
             $assets = $this->app->getDocument()->getWebAssetManager();
             $assets->usePreset('shepherdjs');
