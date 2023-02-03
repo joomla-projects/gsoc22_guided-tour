@@ -62,7 +62,6 @@ class StepsModel extends ListModel
     protected function getEmptyStateQuery()
     {
         $query = clone $this->_getListQuery();
-
         if ($query instanceof DatabaseQuery) {
 
             $query->clear('bounded')
@@ -266,7 +265,7 @@ class StepsModel extends ListModel
         $lang->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
 
         if ($items != false) {
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $item->title = Text::_($item->title);
                 $item->description = Text::_($item->description);
             }
