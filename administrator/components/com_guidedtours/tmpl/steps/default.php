@@ -103,22 +103,10 @@ if ($saveOrder && !empty($this->items)) {
                         ); ?>
                     </th>
                     <th scope="col">
-                        <?php echo HTMLHelper::_(
-                            'searchtools.sort',
-                            'COM_GUIDEDTOURS_STEP_TITLE',
-                            'a.title',
-                            $listDirn,
-                            $listOrder
-                        ); ?>
+                        <?php echo Text::_('COM_GUIDEDTOURS_STEP_TITLE'); ?>
                     </th>
                     <th scope="col">
-                        <?php echo HTMLHelper::_(
-                            'searchtools.sort',
-                            'COM_GUIDEDTOURS_DESCRIPTION',
-                            'a.description',
-                            $listDirn,
-                            $listOrder
-                        ); ?>
+                        <?php echo Text::_('COM_GUIDEDTOURS_DESCRIPTION'); ?>
                     </th>
                     <th scope="col">
                         <?php echo HTMLHelper::_(
