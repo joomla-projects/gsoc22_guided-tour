@@ -120,9 +120,16 @@ if ($saveOrder && !empty($this->items)) {
                             $listOrder
                         ); ?>
                     </th>
-                    <th scope="col" class="text-center">
-                        <?php echo Text::_('COM_GUIDEDTOURS_STEP_TYPE') ?>
+                    <th scope="col">
+                        <?php echo HTMLHelper::_(
+                            'searchtools.sort',
+                            'COM_GUIDEDTOURS_STEP_TYPE',
+                            'a.type',
+                            $listDirn,
+                            $listOrder
+                        ); ?>
                     </th>
+
                     <th scope="col" class="w-10 text-center d-none d-md-table-cell">
                         <?php echo HTMLHelper::_(
                             'searchtools.sort',
@@ -137,9 +144,9 @@ if ($saveOrder && !empty($this->items)) {
 
                 <!-- Table body begins -->
                 <tbody <?php if ($saveOrder) :
-                    ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
+                ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>" data-direction="
                     <?php echo strtolower($listDirn); ?>" data-nested="true" <?php
-                       endif; ?>>
+                endif; ?>
                 <?php foreach ($this->items as $i => $item) :
                     $canCreate = $user->authorise('core.create', 'com_guidedtours');
                     $canEdit = $user->authorise('core.edit', 'com_guidedtours');
