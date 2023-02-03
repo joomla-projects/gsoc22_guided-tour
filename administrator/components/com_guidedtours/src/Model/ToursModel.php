@@ -71,14 +71,6 @@ class ToursModel extends ListModel
 
         $this->setState('filter.extension', $extension);
 
-        /** Note: threw depreciation error fixed by code below
-         *
-         * $parts = explode('.', $extension);
-         *
-         */
-
-        $parts = explode(',', $result['comp_uids'] ?? '');
-
         // Extract the component name
         $this->setState('filter.component', $parts[0]);
 
