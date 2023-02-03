@@ -62,8 +62,8 @@ class StepsModel extends ListModel
     protected function getEmptyStateQuery()
     {
         $query = clone $this->_getListQuery();
-        if ($query instanceof DatabaseQuery) {
 
+        if ($query instanceof DatabaseQuery) {
             $query->clear('bounded')
                 ->clear('group')
                 ->clear('having')
