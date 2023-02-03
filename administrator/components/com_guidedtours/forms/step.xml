@@ -2,10 +2,10 @@
 <form addfieldprefix="Joomla\Component\Guidedtours\Administrator\Field">
 
 	<field
-			name="id"
-			type="text"
-			label="JGLOBAL_FIELD_ID_LABEL"
-			default="0"
+		name="id"
+		type="text"
+		label="JGLOBAL_FIELD_ID_LABEL"
+		default="0"
 	/>
 
 	<field
@@ -15,11 +15,11 @@
 	/>
 
 	<field
-			name="position"
-			type="list"
-			label="COM_GUIDEDTOURS_POSITION_LABEL"
-			description="COM_GUIDEDTOURS_POSITION_DESC"
-			validate="options"
+		name="position"
+		type="list"
+		label="COM_GUIDEDTOURS_POSITION_LABEL"
+		description="COM_GUIDEDTOURS_POSITION_DESC"
+		validate="options"
 	>
 		<option value="bottom">COM_GUIDEDTOURS_FIELD_OPTION_BOTTOM</option>
 		<option value="top">COM_GUIDEDTOURS_FIELD_OPTION_TOP</option>
@@ -29,48 +29,48 @@
 	</field>
 
 	<field
-			name="target"
-			type="text"
-			label="COM_GUIDEDTOURS_TARGET_LABEL"
-			description="COM_GUIDEDTOURS_TARGET_DESC"
+		name="target"
+		type="text"
+		label="COM_GUIDEDTOURS_TARGET_LABEL"
+		description="COM_GUIDEDTOURS_TARGET_DESC"
 	/>
 
 	<field
-			name="tour_id"
-			type="hidden"
-			class="readonly"
-			readonly="true"
+		name="tour_id"
+		type="hidden"
+		class="readonly"
+		readonly="true"
 	/>
 
 	<field
-			name="asset_id"
-			type="hidden"
-			filter="unset"
+		name="asset_id"
+		type="hidden"
+		filter="unset"
 	/>
 
 	<field
-			name="title"
-			type="text"
-			label="COM_GUIDEDTOURS_STEP_TITLE"
-			required="true"
+		name="title"
+		type="text"
+		label="COM_GUIDEDTOURS_STEP_TITLE"
+		required="true"
 	/>
 
 	<field
-			name="description"
-			type="editor"
-			label="JGLOBAL_DESCRIPTION"
-			filter="JComponentHelper::filterText"
-			buttons="true"
-			hide="readmore,pagebreak"
+		name="description"
+		type="editor"
+		label="JGLOBAL_DESCRIPTION"
+		filter="JComponentHelper::filterText"
+		buttons="true"
+		hide="readmore,pagebreak"
 	/>
 
 	<field
-			name="published"
-			type="list"
-			label="JSTATUS"
-			default="1"
-			class="form-select-color-state"
-			validate="options"
+		name="published"
+		type="list"
+		label="JSTATUS"
+		default="1"
+		class="form-select-color-state"
+		validate="options"
 	>
 		<option value="1">JPUBLISHED</option>
 		<option value="0">JUNPUBLISHED</option>
@@ -79,12 +79,12 @@
 	</field>
 
 	<field
-			name="type"
-			type="list"
-			label="COM_GUIDEDTOURS_TYPE_LABEL"
-			default="0"
-			description="COM_GUIDEDTOURS_TYPE_DESC"
-			validate="options"
+		name="type"
+		type="list"
+		label="COM_GUIDEDTOURS_TYPE_LABEL"
+		default="0"
+		description="COM_GUIDEDTOURS_TYPE_DESC"
+		validate="options"
 	>
 		<option value="0">COM_GUIDEDTOURS_FIELD_VALUE_NEXT_STEP</option>
 		<option value="1">COM_GUIDEDTOURS_FIELD_VALUE_REDIRECT</option>
@@ -92,22 +92,22 @@
 	</field>
 
 	<field
-			name="url"
-			type="url"
-			label="COM_GUIDEDTOURS_TYPE_REDIRECT_URL_LABEL"
-			description="COM_GUIDEDTOURS_TYPE_REDIRECT_URL_DESC"
-			showon="type:1"
-			filter="string"
+		name="url"
+		type="url"
+		label="COM_GUIDEDTOURS_TYPE_REDIRECT_URL_LABEL"
+		description="COM_GUIDEDTOURS_TYPE_REDIRECT_URL_DESC"
+		showon="type:1"
+		filter="string"
 	/>
 
 	<field
-			name="interactive_type"
-			type="list"
-			label="COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_LABEL"
-			description="COM_GUIDEDTOURS_INTERACTIVE_STEP_DESC"
-			showon="type:2"
-			filter="string"
-			validate="options"
+		name="interactive_type"
+		type="list"
+		label="COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_LABEL"
+		description="COM_GUIDEDTOURS_INTERACTIVE_STEP_DESC"
+		showon="type:2"
+		filter="string"
+		validate="options"
 	>
 		<option value="1">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_BUTTON_LABEL</option>
 		<option value="2">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_TEXT_FIELD_LABEL</option>
@@ -115,72 +115,72 @@
 	</field>
 
 	<field
-			name="checked_out"
-			type="hidden"
-			filter="unset"
+		name="checked_out"
+		type="hidden"
+		filter="unset"
 	/>
 
 	<field
-			name="checked_out_time"
-			type="hidden"
-			filter="unset"
+		name="checked_out_time"
+		type="hidden"
+		filter="unset"
 	/>
 
 	<field
-			name="created_user_id"
-			type="user"
-			label="JGLOBAL_FIELD_CREATED_BY_LABEL"
-			validate="UserId"
+		name="created_user_id"
+		type="user"
+		label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+		validate="UserId"
 	/>
 
 	<field
-			name="created_time"
-			type="calendar"
-			label="JGLOBAL_CREATED_DATE"
-			translateformat="true"
-			showtime="true"
-			filter="user_utc"
+		name="created_time"
+		type="calendar"
+		label="JGLOBAL_CREATED_DATE"
+		translateformat="true"
+		showtime="true"
+		filter="user_utc"
 	/>
 
 	<field
-			name="modified_user_id"
-			type="user"
-			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
-			validate="UserId"
+		name="modified_user_id"
+		type="user"
+		label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+		validate="UserId"
 	/>
 
 	<field
-			name="modified_time"
-			type="calendar"
-			label="JGLOBAL_FIELD_MODIFIED_LABEL"
-			class="readonly"
-			filter="user_utc"
+		name="modified_time"
+		type="calendar"
+		label="JGLOBAL_FIELD_MODIFIED_LABEL"
+		class="readonly"
+		filter="user_utc"
 	/>
 
 	<field
-			name="language"
-			type="contentlanguage"
-			label="JFIELD_LANGUAGE_LABEL"
+		name="language"
+		type="contentlanguage"
+		label="JFIELD_LANGUAGE_LABEL"
 	>
 		<option value="*">JALL</option>
 	</field>
 
 	<field
-			name="rules"
-			type="rules"
-			label="JFIELD_RULES_LABEL"
-			translate_label="false"
-			filter="rules"
-			validate="rules"
-			component="com_guidedtours"
-			section="step"
+		name="rules"
+		type="rules"
+		label="JFIELD_RULES_LABEL"
+		translate_label="false"
+		filter="rules"
+		validate="rules"
+		component="com_guidedtours"
+		section="step"
 	/>
 
 	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
 		<field
-				name="asset_id"
-				type="hidden"
-				filter="unset"
+			name="asset_id"
+			type="hidden"
+			filter="unset"
 		/>
 	</fieldset>
 
