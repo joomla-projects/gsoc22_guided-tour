@@ -71,9 +71,6 @@ class ToursModel extends ListModel
 
         $this->setState('filter.extension', $extension);
 
-        // Extract the component name
-        $this->setState('filter.component', $parts[0]);
-
         // Extract the optional section name
 
         parent::populateState($ordering, $direction);
