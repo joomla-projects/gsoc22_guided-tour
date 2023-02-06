@@ -38,6 +38,8 @@ class ToursModel extends ListModel
                 'title', 'a.title',
                 'description', 'a.description',
                 'published', 'a.published',
+                'language',
+                'a.language',
                 'ordering', 'a.ordering',
                 'extensions', 'a.extensions',
                 'created_by', 'a.created_by',
@@ -137,6 +139,15 @@ class ToursModel extends ListModel
             )
         );
         $query->from('#__guidedtours AS a');
+
+        // Join with language table
+        $query->select(
+            [
+                $db->quoteName('l.title', 'language_title'),
+                $db->quoteName('l.image', 'language_image'),
+            ]
+        )
+            ->join('LEFT', $db->quoteName('#__languages', 'l'), $db->quoteName('l.lang_code') . ' = ' . $db->quoteName('a.language'));
 
         // Filter by extension
         if ($extension = $this->getState('filter.extension')) {
