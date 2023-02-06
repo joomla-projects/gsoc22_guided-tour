@@ -2,44 +2,44 @@
 <form addfieldprefix="Joomla\Component\Guidedtours\Administrator\Field">
 
 	<field
-		name="id"
-		type="text"
-		label="JGLOBAL_FIELD_ID_LABEL"
-		class="readonly"
-		readonly="true"
-		default="0"
-	/>
-	
-	<field
-		name="asset_id"
-		type="hidden"
-		filter="unset"
+			name="id"
+			type="text"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			class="readonly"
+			readonly="true"
+			default="0"
 	/>
 
 	<field
-		name="title"
-		type="text"
-		label="JGLOBAL_TITLE"
-		required="true"
+			name="asset_id"
+			type="hidden"
+			filter="unset"
 	/>
 
 	<field
-		name="description"
-		type="editor"
-		label="JGLOBAL_DESCRIPTION"
-		filter="JComponentHelper::filterText"
-		buttons="true"
-		hide="readmore,pagebreak"
+			name="title"
+			type="text"
+			label="JGLOBAL_TITLE"
+			required="true"
 	/>
 
 	<field
-		name="published"
-		type="list"
-		label="JSTATUS"
-		default="1"
-		class="form-select-color-state"
-		validate="options"
-		>
+			name="description"
+			type="editor"
+			label="JGLOBAL_DESCRIPTION"
+			filter="JComponentHelper::filterText"
+			buttons="true"
+			hide="readmore,pagebreak"
+	/>
+
+	<field
+			name="published"
+			type="list"
+			label="JSTATUS"
+			default="1"
+			class="form-select-color-state"
+			validate="options"
+	>
 		<option value="1">JPUBLISHED</option>
 		<option value="0">JUNPUBLISHED</option>
 		<option value="2">JARCHIVED</option>
@@ -47,103 +47,110 @@
 	</field>
 
 	<field
-		name="checked_out"
-		type="hidden"
-		filter="unset"
-		default="0"
-	/>
-
-	<field
-		name="checked_out_time"
-		type="hidden"
-		filter="unset"
-	/>
-
-	<field
-		name="access"
-		type="accesslevel"
-		label="JFIELD_ACCESS_LABEL"
-		filter="UINT"
-		validate="options"
-	/>
-
-	<field
-		name="created_user_id"
-		type="user"
-		label="JGLOBAL_FIELD_CREATED_BY_LABEL"
-		validate="UserId"
-	/>
-
-	<field
-		name="created_time"
-		type="calendar"
-		label="JGLOBAL_CREATED_DATE"
-		translateformat="true"
-		showtime="true"
-		filter="user_utc"
-	/>
-
-	<field
-		name="modified_user_id"
-		type="user"
-		label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
-		validate="UserId"
-	/>
-
-	<field
-		name="modified_time"
-		type="calendar"
-		label="JGLOBAL_FIELD_MODIFIED_LABEL"
-		class="readonly"
-		translateformat="true"
-		showtime="true"
-		filter="user_utc"
-	/>
-
-	<field
-		name="language"
-		type="contentlanguage"
-		label="JFIELD_LANGUAGE_LABEL"
-		>
-		<option value="*">JALL</option>
-	</field>	
-	
-	<field
-		name="url"
-		type="url"
-		label="COM_GUIDEDTOURS_URL_LABEL"
-		description="COM_GUIDEDTOURS_URL_DESC"
-	/>
-	
-	<field
-		name="rules"
-		type="rules"
-		label="JFIELD_RULES_LABEL"
-		translate_label="false"
-		filter="rules"
-		validate="rules"
-		component="com_guidedtours"
-		section="tour"
-	/>
-	
-	<field
-		name="extensions"
-		type="components"
-		label="COM_GUIDEDTOURS_EXTENSIONS_LABEL"
-		description="COM_GUIDEDTOURS_EXTENSIONS_DESC"
-		multiple="multiple"
-		layout="joomla.form.field.list-fancy-select"
-		default="*"
-		>
-		<option value="*">JALL</option>
-	</field>
-	
-	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
-		<field
-			name="asset_id"
+			name="checked_out"
 			type="hidden"
 			filter="unset"
-		/>		
+			default="0"
+	/>
+
+	<field
+			name="checked_out_time"
+			type="hidden"
+			filter="unset"
+	/>
+
+	<field
+			name="access"
+			type="accesslevel"
+			label="JFIELD_ACCESS_LABEL"
+			filter="UINT"
+			validate="options"
+	/>
+
+	<field
+			name="created_user_id"
+			type="user"
+			label="JGLOBAL_FIELD_CREATED_BY_LABEL"
+			validate="UserId"
+	/>
+
+	<field
+			name="created_time"
+			type="calendar"
+			label="JGLOBAL_CREATED_DATE"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+	/>
+
+	<field
+			name="modified_user_id"
+			type="user"
+			label="JGLOBAL_FIELD_MODIFIED_BY_LABEL"
+			validate="UserId"
+	/>
+
+	<field
+			name="modified_time"
+			type="calendar"
+			label="JGLOBAL_FIELD_MODIFIED_LABEL"
+			class="readonly"
+			translateformat="true"
+			showtime="true"
+			filter="user_utc"
+	/>
+
+	<field
+			name="language"
+			type="contentlanguage"
+			label="JFIELD_LANGUAGE_LABEL"
+	>
+		<option value="*">JALL</option>
+	</field>
+
+	<field
+			name="note"
+			type="text"
+			label="COM_GUIDEDTOURS_FIELD_NOTE_LABEL"
+			maxlength="255"
+	/>
+
+	<field
+			name="url"
+			type="url"
+			label="COM_GUIDEDTOURS_URL_LABEL"
+			description="COM_GUIDEDTOURS_URL_DESC"
+	/>
+
+	<field
+			name="rules"
+			type="rules"
+			label="JFIELD_RULES_LABEL"
+			translate_label="false"
+			filter="rules"
+			validate="rules"
+			component="com_guidedtours"
+			section="tour"
+	/>
+
+	<field
+			name="extensions"
+			type="components"
+			label="COM_GUIDEDTOURS_EXTENSIONS_LABEL"
+			description="COM_GUIDEDTOURS_EXTENSIONS_DESC"
+			multiple="multiple"
+			layout="joomla.form.field.list-fancy-select"
+			default="*"
+	>
+		<option value="*">JALL</option>
+	</field>
+
+	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
+		<field
+				name="asset_id"
+				type="hidden"
+				filter="unset"
+		/>
 	</fieldset>
 
 </form>
