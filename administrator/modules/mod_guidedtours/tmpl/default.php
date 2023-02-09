@@ -13,9 +13,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-// Load the Bootstrap Dropdown
-HTMLHelper::_('bootstrap.dropdown', '.dropdown-toggle');
-?>
+if ($app->getIdentity()->authorise('core.manage', 'com_postinstall')) : ?>
+
 <div class="header-item-content dropdown header-profile">
     <button class="dropdown-toggle d-flex align-items-center ps-0 py-0" data-bs-toggle="dropdown" type="button"
         title="<?php echo Text::_('MOD_GUIDEDTOURS_MENU'); ?>">
@@ -36,3 +35,5 @@ HTMLHelper::_('bootstrap.dropdown', '.dropdown-toggle');
         <?php endforeach; ?>
     </div>
 </div>
+
+<?php endif; ?>
