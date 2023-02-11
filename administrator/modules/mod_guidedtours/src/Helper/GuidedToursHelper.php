@@ -55,7 +55,6 @@ class GuidedToursHelper
         $items = $tours->getItems();
 
         foreach ($items as $key => $item) {
-
             // The user can only see the tours allowed for the access group.
             if (!\in_array($item->access, $authorised)) {
                 unset($items[$key]);
