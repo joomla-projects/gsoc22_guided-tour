@@ -62,7 +62,6 @@ class ToursModel extends ListModel
         $query = clone $this->_getListQuery();
 
         if ($query instanceof DatabaseQuery) {
-
             $query->clear('bounded')
                 ->clear('group')
                 ->clear('having')
