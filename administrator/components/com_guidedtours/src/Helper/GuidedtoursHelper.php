@@ -23,7 +23,7 @@ class GuidedtoursHelper
     {
         if (empty($id)) {
             // Throw an error or ...
-            return "*";
+            return "";
         }
 
         $db = Factory::getDbo();
