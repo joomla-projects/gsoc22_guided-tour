@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -206,7 +207,7 @@ if ($saveOrder && !empty($this->items)) {
                             </span>
                         </th>
                         <td class="">
-                            <?php echo $item->description; ?>
+                            <?php echo StringHelper::truncate($item->description,200,true,false); ?>
                         </td>
 
                         <!-- Step Type -->

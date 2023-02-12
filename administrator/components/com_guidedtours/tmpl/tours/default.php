@@ -11,6 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\Helpers\StringHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -199,7 +200,7 @@ method="post" name="adminForm" id="adminForm">
                             </th>
 
                             <td class="">
-                                <?php echo $item->description; ?>
+                                <?php echo StringHelper::truncate($item->description,200,true,false); ?>
                             </td>
 
                             <td class="text-center btns d-none d-md-table-cell itemnumber">
