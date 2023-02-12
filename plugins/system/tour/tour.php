@@ -139,6 +139,7 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
         );
 
         $mySteps->setState('filter.tour_id', $tour_id);
+        $mySteps->setState('filter.published', 1);
 
         $tour_steps = $mySteps->getItems();
 
