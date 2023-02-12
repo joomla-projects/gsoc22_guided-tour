@@ -108,7 +108,7 @@ if ($saveOrder && !empty($this->items)) {
                     <th scope="col">
                         <?php echo Text::_('COM_GUIDEDTOURS_DESCRIPTION'); ?>
                     </th>
-                    <th scope="col" class="text-center">
+                    <th scope="col">
                         <?php echo HTMLHelper::_(
                             'searchtools.sort',
                             'COM_GUIDEDTOURS_STEP_TYPE',
@@ -206,7 +206,7 @@ if ($saveOrder && !empty($this->items)) {
                         </td>
 
                         <!-- Step Type -->
-                        <td class="text-center">
+                        <td>
                             <?php
                             if ($item->type == 0) {
                                 echo Text::_('COM_GUIDEDTOURS_STEP_TYPE_NEXT_STEP');

@@ -161,6 +161,7 @@
 		name="language"
 		type="contentlanguage"
 		label="JFIELD_LANGUAGE_LABEL"
+		default="*"
 	>
 		<option value="*">JALL</option>
 	</field>

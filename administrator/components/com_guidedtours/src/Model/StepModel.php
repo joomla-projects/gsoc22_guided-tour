@@ -366,7 +366,7 @@ class StepModel extends AdminModel
         }
 
         // Disables language field selection
-        $form->setFieldAttribute('language', 'disabled', 'true');
+        $form->setFieldAttribute('language', 'readonly', 'true');
 
         return $form;
     }
