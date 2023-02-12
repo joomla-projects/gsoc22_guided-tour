@@ -387,9 +387,6 @@ class StepModel extends AdminModel
         if ($result = parent::getItem($pk)) {
             $result->title = Text::_($result->title);
             $result->description = Text::_($result->description);
-
-            // Replace 'images/' to '../images/' when using an image from /images in backend.
-            $result->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $result->description);
         }
 
         return $result;
