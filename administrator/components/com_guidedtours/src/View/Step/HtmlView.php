@@ -94,7 +94,7 @@ class HtmlView extends BaseHtmlView
     {
         Factory::getApplication()->input->set('hidemainmenu', true);
 
-        $user       = Factory::getUser();
+        $user       = $this->getCurrentUser();
         $userId     = $user->id;
         $isNew      = empty($this->item->id);
 
@@ -103,7 +103,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance();
 
         ToolbarHelper::title(
-            Text::_('COM_GUIDEDTOURS') . ' - ' . ($isNew ? 'Add Step' : 'Edit Step'), 'map-signs'
+            Text::_('COM_GUIDEDTOURS') . ' - ' . ($isNew ? Text::_('COM_GUIDEDTOURS_MANAGER_STEP_NEW') : Text::_('COM_GUIDEDTOURS_MANAGER_STEP_EDIT')), 'map-signs'
         );
 
         $toolbarButtons = [];
