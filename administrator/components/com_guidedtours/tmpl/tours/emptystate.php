@@ -14,15 +14,15 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 
 $displayData = [
-    'textPrefix' => 'COM_GUIDEDTOURS_STEPS',
-    'formURL'    => 'index.php?option=com_guidedtours&view=steps',
+    'textPrefix' => 'COM_GUIDEDTOURS_TOURS_LIST',
+    'formURL'    => 'index.php?option=com_guidedtours&view=tours',
     'icon'       => 'icon-map-signs',
 ];
 
 $user = Factory::getApplication()->getIdentity();
 
 if ($user->authorise('core.create', 'com_guidedtours')) {
-    $displayData['createURL'] = 'index.php?option=com_guidedtours&task=step.add';
+    $displayData['createURL'] = 'index.php?option=com_guidedtours&task=tour.add';
 }
 
 echo LayoutHelper::render('joomla.content.emptystate', $displayData);

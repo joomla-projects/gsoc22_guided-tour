@@ -4,7 +4,7 @@
  * @package       Joomla.Administrator
  * @subpackage    com_guidedtours
  *
- * @copyright     (C) 2022 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright     (C) 2023 Open Source Matters, Inc. <https://www.joomla.org>
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Component\Guidedtours\Administrator\Helper\GuidedtoursHelper;
+use Joomla\Database\DatabaseQuery;
 use Joomla\Database\ParameterType;
 
 /**
@@ -50,6 +51,38 @@ class ToursModel extends ListModel
         }
 
         parent::__construct($config);
+    }
+
+   /**
+    * Provide a query to be used to evaluate if this is an Empty State, can be overridden in the model to provide granular control.
+    *
+    * @return DatabaseQuery
+    *
+    * @since 4.0.0
+    */
+    protected function getEmptyStateQuery()
+    {
+        $query = clone $this->_getListQuery();
+
+        if ($query instanceof DatabaseQuery) {
+            $query->clear('bounded')
+                ->clear('group')
+                ->clear('having')
+                ->clear('join')
+                ->clear('values')
+                ->clear('where');
+
+            // override of ListModel to keep the tour id filter
+            $db = $this->getDbo();
+            $tour_id = $this->getState('filter.tour_id');
+            if ($tour_id) {
+                $tour_id = (int) $tour_id;
+                $query->where($db->quoteName('a.tour_id') . ' = :tour_id')
+                    ->bind(':tour_id', $tour_id, ParameterType::INTEGER);
+            }
+        }
+
+        return $query;
     }
 
     /**

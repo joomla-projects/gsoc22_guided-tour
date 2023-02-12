@@ -4,7 +4,7 @@
  * @package       Joomla.Administrator
  * @subpackage    com_guidedtours
  *
- * @copyright     (C) 2022 Open Source Matters, Inc. <https://www.joomla.org>
+ * @copyright     (C) 2023 Open Source Matters, Inc. <https://www.joomla.org>
  * @license       GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -297,27 +297,6 @@ class StepModel extends AdminModel
         }
 
         return parent::publish($pks, $value);
-    }
-
-    /**
-     * Method to preprocess the form.
-     *
-     * @param   \JForm  $form   A \JForm object.
-     * @param   mixed   $data   The data expected for the form.
-     * @param   string  $group  The name of the plugin group to import (defaults to "content").
-     *
-     * @return  void
-     *
-     * @since  __DEPLOY_VERSION__
-     */
-    protected function preprocessForm(Form $form, $data, $group = 'content')
-    {
-        $extension = Factory::getApplication()->input->get('extension');
-        $parts = explode('.', $extension);
-        $extension = array_shift($parts);
-        $form->setFieldAttribute('rules', 'component', $extension);
-
-        parent::preprocessForm($form, $data, $group);
     }
 
     /**
