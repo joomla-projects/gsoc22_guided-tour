@@ -11,7 +11,6 @@
 namespace Joomla\Component\Guidedtours\Administrator\Model;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Object\CMSObject;
@@ -384,6 +383,9 @@ class StepModel extends AdminModel
         if ($result = parent::getItem($pk)) {
             $result->title = Text::_($result->title);
             $result->description = Text::_($result->description);
+
+            // Replace 'images/' to '../images/' when using an image from /images in backend.
+            $result->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $result->description);
         }
 
         return $result;
