@@ -65,7 +65,7 @@ method="post" name="adminForm" id="adminForm">
         <?php if (!empty($this->items)) :
             ?>
             <!-- Tours table starts here -->
-            <table class="table" id="categoryList">
+            <table class="table" id="toursList">
 
                 <caption class="visually-hidden">
                     <?php echo Text::_('COM_GUIDEDTOURS_TABLE_CAPTION'); ?>,

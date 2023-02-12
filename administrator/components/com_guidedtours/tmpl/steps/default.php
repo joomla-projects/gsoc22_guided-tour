@@ -65,7 +65,7 @@ if ($saveOrder && !empty($this->items)) {
         <?php if (!empty($this->items)) :
             ?>
             <!-- Steps table starts here -->
-            <table class="table" id="categoryList">
+            <table class="table" id="stepsList">
 
                 <caption class="visually-hidden">
                     <?php echo Text::_('COM_GUIDEDTOURS_TABLE_CAPTION'); ?>,
