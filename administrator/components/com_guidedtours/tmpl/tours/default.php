@@ -200,7 +200,7 @@ method="post" name="adminForm" id="adminForm">
                             </th>
 
                             <td class="">
-                                <?php echo StringHelper::truncate($item->description,200,true,false); ?>
+                                <?php echo StringHelper::truncate($item->description, 200, true, false); ?>
                             </td>
 
                             <td class="text-center btns d-none d-md-table-cell itemnumber">

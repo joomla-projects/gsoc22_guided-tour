@@ -207,7 +207,7 @@ if ($saveOrder && !empty($this->items)) {
                             </span>
                         </th>
                         <td class="">
-                            <?php echo StringHelper::truncate($item->description,200,true,false); ?>
+                            <?php echo StringHelper::truncate($item->description, 200, true, false); ?>
                         </td>
 
                         <!-- Step Type -->
