@@ -2,17 +2,17 @@
 <form>
 	<fields name="filter">
 		<field
-			name="search"
-			type="text"
-			label="SEARCH"
-			description="COM_GUIDEDTOURS_FILTER_SEARCH_DESC"
-			hint="JSEARCH_FILTER"
+				name="search"
+				type="text"
+				label="SEARCH"
+				description="COM_GUIDEDTOURS_FILTER_SEARCH_DESC"
+				hint="JSEARCH_FILTER"
 		/>
 		<field
-			name="published"
-			type="status"
-			label="JOPTION_SELECT_PUBLISHED"
-			onchange="this.form.submit();"
+				name="published"
+				type="status"
+				label="JOPTION_SELECT_PUBLISHED"
+				onchange="this.form.submit();"
 		>
 			<option value="">JOPTION_SELECT_PUBLISHED</option>
 		</field>
@@ -20,12 +20,12 @@
 
 	<fields name="list">
 		<field
-			name="fullordering"
-			type="list"
-			label="JGLOBAL_SORT_BY"
-			onchange="this.form.submit();"
-			default="a.title DESC"
-			validate="options"
+				name="fullordering"
+				type="list"
+				label="JGLOBAL_SORT_BY"
+				onchange="this.form.submit();"
+				default="a.title DESC"
+				validate="options"
 		>
 			<option value="">JGLOBAL_SORT_BY</option>
 			<option value="a.id ASC">JGRID_HEADING_ID_ASC</option>
@@ -41,11 +41,11 @@
 		</field>
 
 		<field
-			name="limit"
-			type="limitbox"
-			label="JGLOBAL_LIST_LIMIT"
-			default="25"
-			onchange="this.form.submit();"
+				name="limit"
+				type="limitbox"
+				label="JGLOBAL_LIST_LIMIT"
+				default="25"
+				onchange="this.form.submit();"
 		/>
 	</fields>
 </form>

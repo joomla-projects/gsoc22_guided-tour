@@ -111,6 +111,9 @@ if ($saveOrder && !empty($this->items)) {
                     <th scope="col">
                         <?php echo Text::_('COM_GUIDEDTOURS_DESCRIPTION'); ?>
                     </th>
+                    <th scope="col" class="text-center w-10 d-none d-md-table-cell">
+                        <?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ACCESS', 'a.access', $listDirn, $listOrder); ?>
+                    </th>
                     <th scope="col" class="w-10 text-center d-none d-md-table-cell">
                         <?php echo Text::_('COM_GUIDEDTOURS_STEPS'); ?>
                     </th>
@@ -138,7 +141,7 @@ if ($saveOrder && !empty($this->items)) {
                 <tbody <?php if ($saveOrder) :
                     ?> class="js-draggable" data-url="<?php echo $saveOrderingUrl; ?>
                     " data-direction="<?php echo strtolower($listDirn); ?>" data-nested="true" <?php
-                       endif; ?>>
+                endif; ?>>
                 <?php
                 foreach ($this->items as $i => $item) :
                     $canCreate = $user->authorise('core.create', 'com_guidedtours');
@@ -206,6 +209,25 @@ if ($saveOrder && !empty($this->items)) {
 
                         <td class="">
                             <?php echo $item->description; ?>
+                        </td>
+
+                        <!-- Adds access labels -->
+                        <td class="small text-center d-none d-md-table-cell">
+                            <?php
+
+                            if ($this->escape($item->access) == "1") {
+                                echo Text::_('COM_GUIDEDTOURS_ACCESS_PUBLIC');
+                            } elseif ($this->escape($item->access) == "2") {
+                                echo Text::_('COM_GUIDEDTOURS_ACCESS_REGISTERED');
+                            } elseif ($this->escape($item->access) == "3") {
+                                echo Text::_('COM_GUIDEDTOURS_ACCESS_SPECIAL');
+                            } elseif ($this->escape($item->access) == "6") {
+                                echo Text::_('COM_GUIDEDTOURS_ACCESS_SUPER_USERS');
+                            } else {
+                                echo Text::_('COM_GUIDEDTOURS_ACCESS_GUEST');
+                            }
+
+                            ?>
                         </td>
 
                         <td class="text-center btns d-none d-md-table-cell itemnumber">

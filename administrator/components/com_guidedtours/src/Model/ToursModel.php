@@ -13,6 +13,7 @@ namespace Joomla\Component\Guidedtours\Administrator\Model;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Component\Guidedtours\Administrator\Helper\GuidedtoursHelper;
 use Joomla\Database\ParameterType;
 
 /**
@@ -36,6 +37,7 @@ class ToursModel extends ListModel
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'title', 'a.title',
+                'access', 'access_level', 'a.access',
                 'description', 'a.description',
                 'published', 'a.published',
                 'language',
@@ -164,6 +166,12 @@ class ToursModel extends ListModel
                 ->bind(':published', $status, ParameterType::INTEGER);
         } elseif ($status === '') {
             $query->where($db->quoteName('a.published') . ' IN (0, 1)');
+        }
+
+        // Filter by access level.
+        if ($access = (int) $this->getState('filter.access')) {
+            $query->where($db->quoteName('a.access') . ' = :access')
+                ->bind(':access', $access, ParameterType::INTEGER);
         }
 
         // Filter by search in title.
