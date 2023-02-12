@@ -11,7 +11,6 @@
 namespace Joomla\Component\Guidedtours\Administrator\Model;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;
@@ -285,38 +284,6 @@ class TourModel extends AdminModel
     }
 
     /**
-     * Method to change the published state of one or more records.
-     *
-     * @param   array    &$pks   A list of the primary keys to change.
-     * @param   integer  $value  The value of the published state.
-     *
-     * @return  boolean  True on success.
-     *
-     * @since  __DEPLOY_VERSION__
-     */
-    public function publish(&$pks, $value = 1)
-    {
-        $table = $this->getTable();
-        $pks   = (array) $pks;
-
-        $date = Factory::getDate()->toSql();
-
-        // Clean the cache.
-        $this->cleanCache();
-
-        // Ensure that previous checks don't empty the array.
-        if (empty($pks)) {
-            return true;
-        }
-
-        $table->load($pk);
-        $table->modified = $date;
-        $table->store();
-
-        return parent::publish($pks, $value);
-    }
-
-    /**
      * Method to get a single record.
      *
      * @param   integer  $pk  The id of the primary key.
@@ -333,6 +300,9 @@ class TourModel extends AdminModel
         if ($result = parent::getItem($pk)) {
             $result->title = Text::_($result->title);
             $result->description = Text::_($result->description);
+
+            // Replace 'images/' to '../images/' when using an image from /images in backend.
+            $result->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $result->description);
         }
 
         return $result;
