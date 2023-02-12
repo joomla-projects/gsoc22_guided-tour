@@ -129,6 +129,9 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
 
         $tour = $myTour->getItem($tour_id);
 
+        // Replace 'images/' to '../images/' when using an image from /images in backend.
+        $tour->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $tour->description);
+
         $mySteps = $factory->createModel(
             'Steps',
             'Administrator',
@@ -137,7 +140,14 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
 
         $mySteps->setState('filter.tour_id', $tour_id);
 
-        $tour->steps = $mySteps->getItems();
+        $tour_steps = $mySteps->getItems();
+
+        foreach ($tour_steps as $step) {
+            // Replace 'images/' to '../images/' when using an image from /images in backend.
+            $step->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $step->description);
+        }
+
+        $tour->steps = $tour_steps;
 
         return json_encode($tour);
     }
