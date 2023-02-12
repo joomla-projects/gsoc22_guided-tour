@@ -182,7 +182,7 @@ method="post" name="adminForm" id="adminForm">
                             </td>
 
                             <th scope="row" class="has-context">
-                                <div class="break-word">
+                                <div>
                                     <?php if ($canEdit) : ?>
                                         <a href="<?php echo Route::_('index.php?option=com_guidedtours&task=tour.edit&id=' . $item->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
                                             <?php echo $this->escape($item->title); ?>
