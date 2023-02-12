@@ -113,6 +113,7 @@
 		type="url"
 		label="COM_GUIDEDTOURS_URL_LABEL"
 		description="COM_GUIDEDTOURS_URL_DESC"
+		required="true"
 	/>
 
 	<field
