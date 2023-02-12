@@ -9,7 +9,7 @@
 		readonly="true"
 		default="0"
 	/>
-	
+
 	<field
 		name="asset_id"
 		type="hidden"
@@ -29,7 +29,7 @@
 		label="JGLOBAL_DESCRIPTION"
 		filter="JComponentHelper::filterText"
 		buttons="true"
-		hide="readmore,pagebreak"
+		hide="readmore,pagebreak,module,menu,fields,contact,article"
 	/>
 
 	<field
@@ -106,15 +106,15 @@
 		label="JFIELD_LANGUAGE_LABEL"
 		>
 		<option value="*">JALL</option>
-	</field>	
-	
+	</field>
+
 	<field
 		name="url"
 		type="url"
 		label="COM_GUIDEDTOURS_URL_LABEL"
 		description="COM_GUIDEDTOURS_URL_DESC"
 	/>
-	
+
 	<field
 		name="rules"
 		type="rules"
@@ -125,7 +125,7 @@
 		component="com_guidedtours"
 		section="tour"
 	/>
-	
+
 	<field
 		name="extensions"
 		type="components"
@@ -137,13 +137,13 @@
 		>
 		<option value="*">JALL</option>
 	</field>
-	
+
 	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
 		<field
 			name="asset_id"
 			type="hidden"
 			filter="unset"
-		/>		
+		/>
 	</fieldset>
 
 </form>
