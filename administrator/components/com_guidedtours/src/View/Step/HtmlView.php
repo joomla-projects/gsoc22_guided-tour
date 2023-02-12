@@ -28,7 +28,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The \JForm object
      *
-     * @var \JForm
+     * @var \Joomla\CMS\Form\Form
      */
     protected $form;
 
@@ -49,7 +49,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var \JObject
+     * @var \Joomla\CMS\Object\CMSObject
      */
     protected $canDo;
 
@@ -58,7 +58,7 @@ class HtmlView extends BaseHtmlView
      *
      * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
      *
-     * @return mixed  A string if successful, otherwise an Error object.
+     * @return  void
      *
      * @throws \Exception
      * @since  __DEPLOY_VERSION__
@@ -75,7 +75,7 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar();
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
     /**
@@ -99,7 +99,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance();
 
         ToolbarHelper::title(
-            Text::_('COM_GUIDEDTOURS') . ' - ' . ($isNew ? 'Add Step' : 'Edit Step')
+            Text::_('COM_GUIDEDTOURS') . ' - ' . ($isNew ? 'Add Step' : 'Edit Step'), 'map-signs'
         );
 
         $toolbarButtons = [];
