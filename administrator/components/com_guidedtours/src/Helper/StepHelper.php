@@ -34,5 +34,4 @@ class StepHelper extends ContentHelper
 
         return $db->loadResult();
     }
-
 }
