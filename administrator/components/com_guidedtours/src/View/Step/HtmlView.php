@@ -100,8 +100,6 @@ class HtmlView extends BaseHtmlView
 
         $canDo = ContentHelper::getActions('com_guidedtours');
 
-        $toolbar = Toolbar::getInstance();
-
         ToolbarHelper::title(
             Text::_('COM_GUIDEDTOURS') . ' - ' . ($isNew ? Text::_('COM_GUIDEDTOURS_MANAGER_STEP_NEW') : Text::_('COM_GUIDEDTOURS_MANAGER_STEP_EDIT')), 'map-signs'
         );
