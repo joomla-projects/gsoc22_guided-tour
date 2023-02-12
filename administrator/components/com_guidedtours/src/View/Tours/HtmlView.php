@@ -10,6 +10,7 @@
 
 namespace Joomla\Component\Guidedtours\Administrator\View\Tours;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -73,7 +74,7 @@ class HtmlView extends BaseHtmlView
      *
      * @param   string $tpl The name of the template file to parse; automatically searches through the template paths.
      *
-     * @return mixed  A string if successful, otherwise an Error object.
+     * @return  void
      */
     public function display($tpl = null)
     {
@@ -94,7 +95,7 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar();
 
-        return parent::display($tpl);
+        parent::display($tpl);
     }
 
     /**
@@ -112,6 +113,7 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::title(Text::_('COM_GUIDEDTOURS_TOURS_LIST'), 'map-signs');
 
         $canDo = ContentHelper::getActions('com_guidedtours');
+        $user  = Factory::getApplication()->getIdentity();
 
         if ($canDo->get('core.create')) {
             $toolbar->addNew('tour.add');
@@ -143,6 +145,10 @@ class HtmlView extends BaseHtmlView
                 ->text('JTOOLBAR_EMPTY_TRASH')
                 ->message('JGLOBAL_CONFIRM_DELETE')
                 ->listCheck(true);
+        }
+
+        if ($user->authorise('core.admin', 'com_guidedtours') || $user->authorise('core.options', 'com_guidedtours')) {
+            $toolbar->preferences('com_guidedtours');
         }
     }
 }
