@@ -16,6 +16,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Table\Table;
+use Joomla\Component\Guidedtours\Administrator\Helper\GuidedtoursHelper;
+use Joomla\Component\Guidedtours\Administrator\Helper\StepHelper;
 use Joomla\String\StringHelper;
 
 /**
@@ -362,6 +364,9 @@ class StepModel extends AdminModel
             $form->setFieldAttribute('default', 'required', 'false');
             $form->setFieldAttribute('default', 'filter', 'unset');
         }
+
+        // Disables language field selection
+        $form->setFieldAttribute('language', 'disabled', 'true');
 
         return $form;
     }
