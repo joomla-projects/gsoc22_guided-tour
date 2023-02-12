@@ -179,7 +179,11 @@ method="post" name="adminForm" id="adminForm">
                             <th scope="row" class="has-context">
                                 <div class="break-word">
                                     <?php if ($canEdit) : ?>
-                                        <a href="<?php echo Route::_('index.php?option=com_guidedtours&task=tour.edit&id=' . $item->id); ?>" title="<?php echo Text::_('JACTION_EDIT'); ?> <?php echo $this->escape($item->title); ?>">
+                                        <a href="<?php echo Route::_(
+                                            'index.php?option=com_guidedtours&task=tour.edit&id=' . $item->id
+                                                 ); ?>
+                                            " title="<?php echo Text::_('JACTION_EDIT'); ?>
+                                            <?php echo $this->escape($item->title); ?>">
                                             <?php echo $this->escape($item->title); ?>
                                         </a>
                                     <?php else : ?>
@@ -187,7 +191,10 @@ method="post" name="adminForm" id="adminForm">
                                     <?php endif; ?>
                                     <div class="small break-word">
                                         <?php if ($item->note) : ?>
-                                            <?php echo Text::sprintf('JGLOBAL_LIST_NOTE', $this->escape($item->note)); ?>
+                                            <?php echo Text::sprintf(
+                                                'JGLOBAL_LIST_NOTE',
+                                                $this->escape($item->note)
+                                            ); ?>
                                         <?php endif; ?>
                                     </div>
                                 </div>
