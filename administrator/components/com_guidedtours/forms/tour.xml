@@ -39,7 +39,7 @@
 		default="1"
 		class="form-select-color-state"
 		validate="options"
-		>
+	>
 		<option value="1">JPUBLISHED</option>
 		<option value="0">JUNPUBLISHED</option>
 		<option value="2">JARCHIVED</option>
@@ -104,9 +104,17 @@
 		name="language"
 		type="contentlanguage"
 		label="JFIELD_LANGUAGE_LABEL"
-		>
+		default="*"
+	>
 		<option value="*">JALL</option>
 	</field>
+
+	<field
+		name="note"
+		type="text"
+		label="COM_GUIDEDTOURS_FIELD_NOTE_LABEL"
+		maxlength="255"
+	/>
 
 	<field
 		name="url"
@@ -135,7 +143,7 @@
 		multiple="multiple"
 		layout="joomla.form.field.list-fancy-select"
 		default="*"
-		>
+	>
 		<option value="*">JALL</option>
 	</field>
 

@@ -27,7 +27,7 @@ class GuidedtoursHelper
     {
         if (empty($id)) {
             // Throw an error or ...
-            return false;
+            return "";
         }
 
         $db = Factory::getDbo();

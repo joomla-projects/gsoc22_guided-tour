@@ -10,6 +10,7 @@
 
 namespace Joomla\Component\Guidedtours\Administrator\Helper;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ContentHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -21,4 +22,20 @@ use Joomla\CMS\Helper\ContentHelper;
  */
 class StepHelper extends ContentHelper
 {
+    public static function getTourLanguage($id)
+    {
+        if (empty($id)) {
+            // Throw an error or ...
+            return "*";
+        }
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select('language');
+        $query->from('#__guidedtours');
+        $query->where('id = ' . $id);
+        $db->setQuery($query);
+
+        return $db->loadResult();
+    }
 }

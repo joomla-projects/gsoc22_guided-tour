@@ -211,7 +211,7 @@ if ($saveOrder && !empty($this->items)) {
                         </td>
 
                         <!-- Step Type -->
-                        <td class="text-center">
+                        <td>
                             <?php
                             if ($item->type == 0) {
                                 echo Text::_('COM_GUIDEDTOURS_STEP_TYPE_NEXT_STEP');
@@ -233,7 +233,7 @@ if ($saveOrder && !empty($this->items)) {
             </table>
 
             <?php
-            // Load the pagination. (@todo: testing)
+            // Load the pagination (@todo: testing)
             echo $this->pagination->getListFooter();
             ?>
         <?php endif; ?>
