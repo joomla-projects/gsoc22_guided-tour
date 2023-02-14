@@ -190,6 +190,6 @@
 		validate="rules"
 		component="com_guidedtours"
 		section="step"
-	/>s
+	/>
 
 </form>
