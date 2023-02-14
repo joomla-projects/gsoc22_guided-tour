@@ -104,11 +104,7 @@ $modalCode = HTMLHelper::_('bootstrap.renderModal', 'modGuidedTours-modal', $mod
 // We have to attach the modal to the body, otherwise we have problems with the backdrop
 $app->getDocument()->getWebAssetManager()->addInlineScript("
 document.addEventListener('DOMContentLoaded', function() {
-
     document.body.insertAdjacentHTML('beforeend', " . json_encode($modalCode) . ");
     var modal = document.getElementById('modGuidedTours-modal');
-    if (Joomla && Joomla.initialiseModal) {
-        Joomla.initialiseModal(modal);
-    }
 });
 ");
