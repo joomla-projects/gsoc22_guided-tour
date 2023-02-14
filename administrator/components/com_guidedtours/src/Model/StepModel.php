@@ -40,6 +40,14 @@ class StepModel extends AdminModel
     protected $text_prefix = 'COM_GUIDEDTOURS';
 
     /**
+     * Type alias for content type
+     *
+     * @var string
+     * @since __DEPLOY_VERSION__
+     */
+    public $typeAlias = 'com_guidedtours.step';
+
+    /**
      * Method to test whether a record can be deleted.
      *
      * @param   object  $record  A record object.
@@ -272,7 +280,7 @@ class StepModel extends AdminModel
         $table = $this->getTable();
         $pks   = (array) $pks;
         $app = Factory::getApplication();
-        $extension = $app->getUserStateFromRequest('com_guidedtours.state.filter.extension', 'extension', null, 'cmd');
+        $extension = $app->getUserStateFromRequest('com_guidedtours.step.filter.extension', 'extension', null, 'cmd');
 
         // Default item existence checks.
         if ($value != 1) {
@@ -301,7 +309,7 @@ class StepModel extends AdminModel
     {
         // Get the form.
         $form = $this->loadForm(
-            'com_guidedtours.state',
+            'com_guidedtours.step',
             'step',
             array(
                 'control' => 'jform',

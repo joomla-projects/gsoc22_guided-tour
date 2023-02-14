@@ -30,6 +30,22 @@ use Joomla\String\StringHelper;
 class TourModel extends AdminModel
 {
     /**
+     * The prefix to use with controller messages.
+     *
+     * @var   string
+     * @since __DEPLOY_VERSION__
+     */
+    protected $text_prefix = 'COM_GUIDEDTOURS';
+
+    /**
+     * Type alias for content type
+     *
+     * @var string
+     * @since __DEPLOY_VERSION__
+     */
+    public $typeAlias = 'com_guidedtours.tour';
+
+    /**
      * Auto-populate the model state.
      *
      * Note. Calling getState in this method will result in recursion.
@@ -352,7 +368,7 @@ class TourModel extends AdminModel
 
                 $db->setQuery($query);
                 $rows = $db->loadObjectList();
-                
+
                 $query = $db->getQuery(true)
                 ->insert($db->quoteName('#__guidedtour_steps'))
                 ->columns([$db->quoteName('tour_id'), $db->quoteName('title'),
@@ -408,7 +424,7 @@ class TourModel extends AdminModel
                 }
 
                 $db->setQuery($query);
-                
+
                 try {
                     $db->execute();
                 } catch (\RuntimeException $e) {
@@ -416,7 +432,7 @@ class TourModel extends AdminModel
 
                     return false;
                 }
-              
+
             } else {
                 throw new \Exception($table->getError());
             }
