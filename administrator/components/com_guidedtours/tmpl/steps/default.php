@@ -76,7 +76,7 @@ if ($saveOrder && !empty($this->items)) {
                 <!-- Steps table header -->
                 <thead>
                 <tr>
-                    <td class="d-none d-md-table-cell text-center">
+                    <td class="w-1 d-none d-md-table-cell text-center">
                         <?php echo HTMLHelper::_('grid.checkall'); ?>
                     </td>
                     <!-- Ordering?-->
@@ -93,7 +93,7 @@ if ($saveOrder && !empty($this->items)) {
                             'icon-sort'
                         ); ?>
                     </th>
-                    <th scope="col" class="w-3 text-center d-none d-md-table-cell">
+                    <th scope="col" class="w-1 text-center d-none d-md-table-cell">
                         <?php echo HTMLHelper::_(
                             'searchtools.sort',
                             'COM_GUIDEDTOURS_STATUS',
@@ -182,7 +182,7 @@ if ($saveOrder && !empty($this->items)) {
                             ); ?>
                         </td>
 
-                        <!-- Step name, edit link, and note (@todo: should it be moved?) -->
+                        <!-- Step name, edit link, and note -->
                         <th scope="row">
                             <div>
                                 <?php if ($canEdit) : ?>
