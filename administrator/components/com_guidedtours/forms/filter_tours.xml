@@ -22,7 +22,7 @@
 			type="accesslevel"
 			label="JGRID_HEADING_ACCESS"
 			onchange="this.form.submit();"
-		>
+			>
 			<option value="">JOPTION_SELECT_ACCESS</option>
 		</field>
 		<field
