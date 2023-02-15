@@ -36,16 +36,16 @@ foreach ($tours as $tour) :
     $uri = new Uri($tour->url);
 
     // We assume the url is the starting point
-    $key = $uri->getVar('option');
+    $key = Text::_($uri->getVar('option') ?? 'MOD_GUIDEDTOURS_GENERIC_TOUR');
 
     if (!isset($allTours[$key])) :
         $lang->load("$key.sys", JPATH_ADMINISTRATOR)
         || $lang->load("$key.sys", JPATH_ADMINISTRATOR . '/components/' . $key);
 
-        $allTours[Text::_($key)] = [];
+        $allTours[$key] = [];
     endif;
 
-    $allTours[Text::_($key)][] = $tour;
+    $allTours[$key][] = $tour;
 endforeach;
 
 ksort($allTours);
