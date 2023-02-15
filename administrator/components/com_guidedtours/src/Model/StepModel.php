@@ -197,7 +197,7 @@ class StepModel extends AdminModel
                 $db = $this->getDatabase();
                 $query = $db->getQuery(true)
                     ->select('MAX(ordering)')
-                    ->from($db->quoteName('#__guidedtours'));
+                    ->from($db->quoteName('#__guidedtours_steps'));
                 $db->setQuery($query);
                 $max = $db->loadResult();
 
