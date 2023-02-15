@@ -91,8 +91,8 @@ foreach ($allTours as $extension => $tours) :
     foreach ($tours as $tour) :
         $modalHtml[] = '<li class="button-start-guidedtour text-info" role="button" data-id="' . (int) $tour->id . '">' . htmlentities($tour->title) . '</li>';
     endforeach;
-$modalHtml[] = '</ul>';
-$modalHtml[] = '</div>';
+    $modalHtml[] = '</ul>';
+    $modalHtml[] = '</div>';
 endforeach;
 $modalHtml[] = '</div>';
 $modalHtml[] = '</div>';
