@@ -273,11 +273,8 @@ class StepsModel extends ListModel
                 $item->title = Text::_($item->title);
                 $item->description = Text::_($item->description);
 
-                // Sets step language to parent tour language.
+                // Sets step language to parent tour language
                 $item->language = StepHelper::getTourLanguage($item->tour_id);
-
-                //Saves step language to parent tour language.
-                $item->language = StepHelper::setStepLanguage($item->tour_id, $item->language);
             }
         }
 
