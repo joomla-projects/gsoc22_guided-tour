@@ -184,7 +184,7 @@ class ToursModel extends ListModel
         $query->select(
             [
                 $db->quoteName('l.title', 'language_title'),
-                $db->quoteName('l.image', 'language_image'),$db->quoteName('ag.title', 'access_level'),
+                $db->quoteName('l.image', 'language_image'),
             ]
         )
             ->join('LEFT', $db->quoteName('#__languages', 'l'), $db->quoteName('l.lang_code') . ' = ' . $db->quoteName('a.language'));

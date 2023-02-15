@@ -38,7 +38,7 @@
 
 	<fields name="list">
 		<field
-			name="full ordering"
+			name="fullordering"
 			type="list"
 			label="JGLOBAL_SORT_BY"
 			onchange="this.form.submit();"
