@@ -42,7 +42,7 @@ class ToursModel extends ListModel
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'title', 'a.title',
-                'access', 'access_level', 'a.access',
+                'access', 'a.access', 'access_level',
                 'description', 'a.description',
                 'published', 'a.published',
                 'language', 'a.language',
@@ -184,10 +184,18 @@ class ToursModel extends ListModel
         $query->select(
             [
                 $db->quoteName('l.title', 'language_title'),
-                $db->quoteName('l.image', 'language_image'),
+                $db->quoteName('l.image', 'language_image'),$db->quoteName('ag.title', 'access_level'),
             ]
         )
             ->join('LEFT', $db->quoteName('#__languages', 'l'), $db->quoteName('l.lang_code') . ' = ' . $db->quoteName('a.language'));
+
+        // Join access table
+        $query->select(
+            [
+                $db->quoteName('ag.title', 'access_level'),
+            ]
+        )
+            ->join('LEFT', $db->quoteName('#__viewlevels', 'ag'), $db->quoteName('ag.id') . ' = ' . $db->quoteName('a.access'));
 
         // Filter by extension
         if ($extension = $this->getState('filter.extension')) {
@@ -197,7 +205,7 @@ class ToursModel extends ListModel
 
         $status = (string) $this->getState('filter.published');
 
-        // Filter by status.
+        // Filter by status
         if (is_numeric($status)) {
             $status = (int) $status;
             $query->where($db->quoteName('a.published') . ' = :published')
