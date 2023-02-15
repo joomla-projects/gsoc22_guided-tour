@@ -294,8 +294,8 @@ class TourModel extends AdminModel
 
         if ($result = parent::getItem($pk)) {
             if (!empty($result->id)) {
-                $result->title = Text::_($result->title);
-                $result->description = Text::_($result->description);
+                $result->title_translation = Text::_($result->title);
+                $result->description_translation = Text::_($result->description);
             }
         }
 
@@ -326,7 +326,8 @@ class TourModel extends AdminModel
                     $table->title = preg_replace('#\(\d+\)$#', '(' . ($m[1] + 1) . ')', $table->title);
                 }
 
-                $data = $this->generateNewTitle(0, Text::_($table->title), Text::_($table->title));
+                $data = $this->generateNewTitle(0, $table->title, $table->title);
+
                 $table->title = $data[0];
 
                 // Unpublish duplicate tour
