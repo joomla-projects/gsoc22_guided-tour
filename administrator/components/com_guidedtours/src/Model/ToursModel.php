@@ -164,21 +164,26 @@ class ToursModel extends ListModel
     public function getListQuery()
     {
         // Create a new query object.
-        $db    = $this->getDbo();
+        $db    = $this->getDatabase();
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
         $query->select(
             $this->getState(
                 'list.select',
-                'a.*, (SELECT COUNT(' . $db->quoteName('description') . ') FROM '
-                . $db->quoteName('#__guidedtour_steps')
-                . ' WHERE ' . $db->quoteName('tour_id') . ' = ' . $db->quoteName('a.id')
-                . ' AND ' . $db->quoteName('published') . ' = 1'
-                . ') AS ' . $db->quoteName('steps_count')
+                'a.*'
             )
         );
-        $query->from('#__guidedtours AS a');
+
+        $subquery = $db->getQuery(true);
+
+        $subquery->select('COUNT(' . $db->quoteName('s.id') . ')')
+            ->from($db->quoteName('#__guidedtour_steps', 's'))
+            ->where($db->quoteName('s.tour_id') . ' = ' . $db->quoteName('a.id'))
+            ->where($db->quoteName('s.published') . ' = 1');
+
+        $query->select($subquery . ' AS ' . $db->quoteName('steps_count'))
+            ->from('#__guidedtours AS a');
 
         // Join with language table
         $query->select(
@@ -227,10 +232,10 @@ class ToursModel extends ListModel
             } else {
                 $search = '%' . str_replace(' ', '%', trim($search)) . '%';
                 $query->where(
-                    '(' . $db->quoteName('a.title') . ' LIKE :search1 OR ' . $db->quoteName('a.id') . ' LIKE :search2'
-                    . ' OR ' . $db->quoteName('a.description') . ' LIKE :search3)'
+                    '(' . $db->quoteName('a.title') . ' LIKE :search1'
+                    . ' OR ' . $db->quoteName('a.description') . ' LIKE :search2)'
                 )
-                    ->bind([':search1', ':search2', ':search3'], $search);
+                    ->bind([':search1', ':search2'], $search);
             }
         }
 
@@ -271,11 +276,9 @@ class ToursModel extends ListModel
         $lang = Factory::getLanguage();
         $lang->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
 
-        if ($items != false) {
-            foreach ($items as $item) {
-                $item->title = Text::_($item->title);
-                $item->description = Text::_($item->description);
-            }
+        foreach ($items as $item) {
+            $item->title = Text::_($item->title);
+            $item->description = Text::_($item->description);
         }
 
         return $items;
