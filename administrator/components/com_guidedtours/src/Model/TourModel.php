@@ -97,7 +97,7 @@ class TourModel extends AdminModel
         }
 
         // Set step language to parent tour language on save.
-        $id = $data['id'];
+        $id =   $data['id'];
         $lang = $data['language'];
 
         GuidedtoursHelper::setStepLanguage($id, $lang);
