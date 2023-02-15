@@ -197,7 +197,7 @@ class ToursModel extends ListModel
 
         $status = (string) $this->getState('filter.published');
 
-        // Filter by status
+        // Filter by status.
         if (is_numeric($status)) {
             $status = (int) $status;
             $query->where($db->quoteName('a.published') . ' = :published')
