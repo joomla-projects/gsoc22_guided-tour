@@ -57,13 +57,13 @@ class ToursModel extends ListModel
         parent::__construct($config);
     }
 
-   /**
-    * Provide a query to be used to evaluate if this is an Empty State, can be overridden in the model to provide granular control.
-    *
-    * @return DatabaseQuery
-    *
-    * @since 4.0.0
-    */
+    /**
+     * Provide a query to be used to evaluate if this is an Empty State, can be overridden in the model to provide granular control.
+     *
+     * @return DatabaseQuery
+     *
+     * @since 4.0.0
+     */
     protected function getEmptyStateQuery()
     {
         $query = clone $this->_getListQuery();
@@ -210,6 +210,12 @@ class ToursModel extends ListModel
         if ($access = (int) $this->getState('filter.access')) {
             $query->where($db->quoteName('a.access') . ' = :access')
                 ->bind(':access', $access, ParameterType::INTEGER);
+        }
+
+        // Filter on the language.
+        if ($language = $this->getState('filter.language')) {
+            $query->where($db->quoteName('a.language') . ' = :language')
+                ->bind(':language', $language);
         }
 
         // Filter by search in title.
