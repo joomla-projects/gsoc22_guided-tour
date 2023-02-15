@@ -176,10 +176,11 @@ class ToursModel extends ListModel
                 . $db->quoteName('#__guidedtour_steps')
                 . ' WHERE ' . $db->quoteName('tour_id') . ' = ' . $db->quoteName('a.id')
                 . ' AND ' . $db->quoteName('published') . ' = 1'
-                . ') AS ' . $db->quoteName('steps_count')
+                . ') AS ' . $db->quoteName('steps_count') . ', ' . $db->quoteName('uc.name', 'editor')
             )
         );
-        $query->from('#__guidedtours AS a');
+        $query->from('#__guidedtours AS a')
+            ->join('LEFT', $db->quoteName('#__users', 'uc'), $db->quoteName('uc.id') . ' = ' . $db->quoteName('a.checked_out'));
 
         // Join with language table
         $query->select(
@@ -268,7 +269,6 @@ class ToursModel extends ListModel
             foreach ($items as $item) {
                 $item->title = Text::_($item->title);
                 $item->description = Text::_($item->description);
-
                 $item->extensions = (new Registry($item->extensions))->toArray();
             }
         }
