@@ -51,6 +51,8 @@ class StepHelper
 
         return $db->loadResult();
     }
+
+    // Set step language.
     public static function setStepLanguage(int $id, string $language): string
     {
         if (empty($id)) {
