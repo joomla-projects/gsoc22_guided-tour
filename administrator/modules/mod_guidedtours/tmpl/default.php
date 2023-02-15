@@ -83,18 +83,18 @@ $modalParams = [
 
 $modalHtml = [];
 $modalHtml[] = '<div class="p-3">';
-    $modalHtml[] = '<div class="row">';
-        foreach ($allTours as $extension => $tours) :
-            $modalHtml[] = '<div class="col-lg-6">';
-                $modalHtml[] = '<h4>' . htmlentities($extension) . '</h4>';
-                $modalHtml[] = '<ul class="list-unstyled">';
-                foreach ($tours as $tour) :
-                    $modalHtml[] = '<li class="button-start-guidedtour text-info" role="button" data-id="' . (int) $tour->id . '">' . htmlentities($tour->title) . '</li>';
-                endforeach;
-                $modalHtml[] = '</ul>';
-            $modalHtml[] = '</div>';
-        endforeach;
-    $modalHtml[] = '</div>';
+$modalHtml[] = '<div class="row">';
+foreach ($allTours as $extension => $tours) :
+    $modalHtml[] = '<div class="col-lg-6">';
+    $modalHtml[] = '<h4>' . htmlentities($extension) . '</h4>';
+    $modalHtml[] = '<ul class="list-unstyled">';
+    foreach ($tours as $tour) :
+        $modalHtml[] = '<li class="button-start-guidedtour text-info" role="button" data-id="' . (int) $tour->id . '">' . htmlentities($tour->title) . '</li>';
+    endforeach;
+$modalHtml[] = '</ul>';
+$modalHtml[] = '</div>';
+endforeach;
+$modalHtml[] = '</div>';
 $modalHtml[] = '</div>';
 
 $modalBody = implode($modalHtml);
