@@ -98,6 +98,11 @@ class TourModel extends AdminModel
     {
         $input = Factory::getApplication()->input;
 
+        // Language keys must include GUIDEDTOUR to prevent save issues
+        if (strpos($data['description'], 'GUIDEDTOUR') !== false) {
+            $data['description'] = strip_tags($data['description']);
+        }
+
         if ($input->get('task') == 'save2copy') {
             $origTable = clone $this->getTable();
             $origTable->load($input->getInt('id'));

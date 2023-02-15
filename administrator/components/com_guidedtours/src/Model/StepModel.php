@@ -146,6 +146,11 @@ class StepModel extends AdminModel
             unset($data['rules']);
         }
 
+        // Language keys must include GUIDEDTOUR to prevent save issues
+        if (strpos($data['description'], 'GUIDEDTOUR') !== false) {
+            $data['description'] = strip_tags($data['description']);
+        }
+
         // Make sure we use the correct extension when editing an existing tour
         $key = $table->getKeyName();
         $pk  = (isset($data[$key])) ? $data[$key] : (int) $this->getState($this->getName() . '.id');
