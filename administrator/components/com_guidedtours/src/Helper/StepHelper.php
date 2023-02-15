@@ -39,7 +39,7 @@ class StepHelper
             return "*";
         }
 
-        $db    = Factory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('language')
@@ -50,5 +50,28 @@ class StepHelper
         $db->setQuery($query);
 
         return $db->loadResult();
+    }
+    public static function setStepLanguage(int $id, string $language): string
+    {
+        if (empty($id)) {
+            return false;
+        }
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+
+        $fields = array(
+            $db->quoteName('language') . ' = ' . $db->quote($language),
+        );
+
+        $conditions = array(
+            $db->quoteName('tour_id') . ' = ' . $db->quote($id)
+        );
+
+        $query->update($db->quoteName('#__guidedtour_steps'))->set($fields)->where($conditions);
+
+        $db->setQuery($query);
+
+        return $db->execute();
     }
 }
