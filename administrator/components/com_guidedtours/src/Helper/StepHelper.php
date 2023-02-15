@@ -39,7 +39,7 @@ class StepHelper
             return "*";
         }
 
-        $db = Factory::getDbo();
+        $db    = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('language')
