@@ -118,7 +118,6 @@ class HtmlView extends BaseHtmlView
                 $toolbarButtons,
                 'btn-success'
             );
-
         } else {
             // Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
             $itemEditable = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId);
@@ -147,5 +146,5 @@ class HtmlView extends BaseHtmlView
 
         ToolbarHelper::divider();
         ToolbarHelper::help('Guided_Tours:_New_or_Edit_Tour');
-        }
+    }
 }
