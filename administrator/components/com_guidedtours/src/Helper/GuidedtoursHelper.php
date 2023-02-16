@@ -33,7 +33,7 @@ class GuidedtoursHelper
      *
      * @since  __DEPLOY_VERSION__
      */
-    public static function getTourTitle(int $id): object
+    public static function getTourTitle(int $id): string
     {
         if ($id < 0) {
             return "";
