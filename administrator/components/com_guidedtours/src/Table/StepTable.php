@@ -94,6 +94,7 @@ class StepTable extends Table
      *
      * @since   4.1.0
      */
+    // phpcs:ignore
     protected function _getAssetName(): string
     {
         $k = $this->_tbl_key;
