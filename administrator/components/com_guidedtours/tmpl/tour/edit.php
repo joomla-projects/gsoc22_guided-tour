@@ -35,10 +35,15 @@ $wa->useScript('keepalive')
     <?php if ($this->item->id != 0) : ?>
         <div class="row title-alias form-vertical mb-3">
             <div class="col-12">
-                <?php $this->form->setFieldAttribute('title_translation', 'label', Text::sprintf('COM_GUIDEDTOURS_TITLE_TRANSLATION', $lang)); ?>
-                <?php echo $this->form->renderField('title_translation'); ?>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label for="title_translation"><?php echo Text::sprintf('COM_GUIDEDTOURS_TITLE_TRANSLATION', $lang); ?></label>
+                    </div>
+                    <div class="controls">
+                        <input id="title_translation" class="form-control" value="<?php echo Text::_($this->item->title); ?>" readonly="readonly" type="text">
+                    </div>
+                </div>
             </div>
-        </div>
     <?php endif; ?>
 
     <div>
@@ -48,20 +53,23 @@ $wa->useScript('keepalive')
         <div class="row">
             <div class="col-lg">
                 <?php echo $this->form->renderField('url'); ?>
-                <?php echo $this->form->renderField('description'); ?>
-
                 <?php if ($this->item->id != 0) : ?>
-                    <?php $this->form->setFieldAttribute('description_translation', 'label', Text::sprintf('COM_GUIDEDTOURS_DESCRIPTION_TRANSLATION', $lang)); ?>
-                    <?php echo $this->form->renderField('description_translation'); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <label for="description_translation"><?php echo Text::sprintf('COM_GUIDEDTOURS_DESCRIPTION_TRANSLATION', $lang); ?></label>
+                        </div>
+                        <div class="controls">
+                            <input id="description_translation" class="form-control" value="<?php echo Text::_($this->item->description); ?>" readonly="readonly" type="text">
+                        </div>
+                    </div>
                 <?php endif; ?>
-
-                <?php echo $this->form->renderField('extensions'); ?>
+                <?php echo $this->form->renderField('description'); ?>
             </div>
-
             <div class="col-md-3">
                 <div class="card card-light">
                     <div class="card-body">
                         <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+                        <?php echo $this->form->renderField('extensions'); ?>
                     </div>
                 </div>
             </div>
