@@ -39,8 +39,14 @@ if (empty($tour_id)) {
     <?php if ($this->item->id != 0) : ?>
         <div class="row title-alias form-vertical mb-3">
             <div class="col-12">
-                <?php $this->form->setFieldAttribute('title_translation', 'label', Text::sprintf('COM_GUIDEDTOURS_STEP_TITLE_TRANSLATION', $lang)); ?>
-                <?php echo $this->form->renderField('title_translation'); ?>
+                <div class="control-group">
+                    <div class="control-label">
+                        <label for="title_translation"><?php echo Text::sprintf('COM_GUIDEDTOURS_STEP_TITLE_TRANSLATION', $lang); ?></label>
+                    </div>
+                    <div class="controls">
+                        <input id="title_translation" class="form-control" value="<?php echo Text::_($this->item->title); ?>" readonly="readonly" type="text">
+                    </div>
+                </div>
             </div>
         </div>
     <?php endif; ?>
@@ -51,15 +57,21 @@ if (empty($tour_id)) {
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', empty($this->item->id) ? Text::_('COM_GUIDEDTOURS_STEP_NEW_STEP') : Text::_('COM_GUIDEDTOURS_STEP_EDIT_STEP')); ?>
         <div class="row">
             <div class="col-md-9">
-
-                <?php echo $this->form->renderField('description'); ?>
-
                 <?php if ($this->item->id != 0) : ?>
-                    <?php $this->form->setFieldAttribute('description_translation', 'label', Text::sprintf('COM_GUIDEDTOURS_STEP_DESCRIPTION_TRANSLATION', $lang)); ?>
-                    <?php echo $this->form->renderField('description_translation'); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <label for="description_translation"><?php echo Text::sprintf('COM_GUIDEDTOURS_STEP_DESCRIPTION_TRANSLATION', $lang); ?></label>
+                        </div>
+                        <div class="controls">
+                            <input id="description_translation" class="form-control" value="<?php echo Text::_($this->item->description); ?>" readonly="readonly" type="text">
+                        </div>
+                    </div>
                 <?php endif; ?>
+                <?php echo $this->form->renderField('description'); ?>
+            </div>
 
-                <?php echo $this->form->renderField('step_no'); ?>
+            <div class="col-lg-3">
+                <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
                 <?php echo $this->form->renderField('position'); ?>
                 <?php echo $this->form->renderField('target'); ?>
                 <?php echo $this->form->renderField('type'); ?>
@@ -67,11 +79,6 @@ if (empty($tour_id)) {
                 <?php echo $this->form->renderField('interactive_type'); ?>
                 <?php $this->form->setValue('tour_id', null, $tour_id); ?>
                 <?php echo $this->form->renderField('tour_id'); ?>
-
-            </div>
-
-            <div class="col-lg-3">
-                <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
