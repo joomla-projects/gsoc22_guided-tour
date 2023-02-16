@@ -77,7 +77,7 @@ class StepsModel extends ListModel
                 ->clear('where');
 
             // override of ListModel to keep the tour id filter
-            $db = $this->getDbo();
+            $db = $this->getDatabase();
             $tour_id = $this->getState('filter.tour_id');
             if ($tour_id) {
                 $tour_id = (int) $tour_id;
@@ -190,17 +190,25 @@ class StepsModel extends ListModel
     protected function getListQuery()
     {
         // Create a new query object.
-        $db    = $this->getDbo();
+        $db    = $this->getDatabase();
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
         $query->select(
             $this->getState(
                 'list.select',
-                'a.*, ' . $db->quoteName('uc.name', 'editor')
+                'a.*'
             )
         );
-        $query->from('#__guidedtour_steps AS a')
+
+        $query->from($db->quoteName('#__guidedtour_steps', 'a'));
+
+        // Join with user table
+        $query->select(
+            [
+                $db->quoteName('uc.name', 'editor'),
+            ]
+        )
             ->join('LEFT', $db->quoteName('#__users', 'uc'), $db->quoteName('uc.id') . ' = ' . $db->quoteName('a.checked_out'));
 
         $tour_id = $this->getState('filter.tour_id');
@@ -239,10 +247,10 @@ class StepsModel extends ListModel
             } else {
                 $search = '%' . str_replace(' ', '%', trim($search)) . '%';
                 $query->where(
-                    '(' . $db->quoteName('a.title') . ' LIKE :search1 OR ' . $db->quoteName('a.id') . ' LIKE :search2'
-                    . ' OR ' . $db->quoteName('a.description') . ' LIKE :search3)'
+                    '(' . $db->quoteName('a.title') . ' LIKE :search1'
+                    . ' OR ' . $db->quoteName('a.description') . ' LIKE :search2)'
                 )
-                    ->bind([':search1', ':search2', ':search3'], $search);
+                    ->bind([':search1', ':search2'], $search);
             }
         }
 
@@ -269,14 +277,12 @@ class StepsModel extends ListModel
         $lang = Factory::getLanguage();
         $lang->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
 
-        if ($items != false) {
-            foreach ($items as $item) {
-                $item->title = Text::_($item->title);
-                $item->description = Text::_($item->description);
+        foreach ($items as $item) {
+            $item->title = Text::_($item->title);
+            $item->description = Text::_($item->description);
 
-                // Sets step language to parent tour language
-                $item->language = StepHelper::getTourLanguage($item->tour_id);
-            }
+            // Sets step language to parent tour language
+            $item->language = StepHelper::getTourLanguage($item->tour_id);
         }
 
         return $items;
