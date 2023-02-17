@@ -243,10 +243,11 @@ class ToursModel extends ListModel
                 ->bind(':access', $access, ParameterType::INTEGER);
         }
 
-        // Filter on the language.
+        // Filter on the language, or all.
         if ($language = $this->getState('filter.language')) {
-            $query->where($db->quoteName('a.language') . ' = :language')
-                ->bind(':language', $language);
+            $language = ['*', $language];
+
+            $query->whereIn($db->quoteName('a.language'), $language, ParameterType::STRING);
         }
 
         // Filter by search in title.
