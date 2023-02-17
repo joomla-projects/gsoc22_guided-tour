@@ -280,9 +280,6 @@ class StepsModel extends ListModel
         foreach ($items as $item) {
             $item->title = Text::_($item->title);
             $item->description = Text::_($item->description);
-
-            // Sets step language to parent tour language
-            $item->language = StepHelper::getTourLanguage($item->tour_id);
         }
 
         return $items;
