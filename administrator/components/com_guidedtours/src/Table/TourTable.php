@@ -122,6 +122,7 @@ class TourTable extends Table
      *
      * @since   __DEPLOY_VERSION__
      */
+    // phpcs:ignore
     protected function _getAssetTitle()
     {
         return $this->title;
