@@ -256,6 +256,13 @@ Joomla = window.Joomla || {};
   });
 
   document.addEventListener('DOMContentLoaded', () => {
+
+    function startTour(tourId) {
+      if (tourId > 0) {
+
+      }
+    }
+
     const tourId = sessionStorage.getItem('tourId');
     if (tourId) {
       const myTour = Joomla.getOptions('myTour');
@@ -272,6 +279,11 @@ Joomla = window.Joomla || {};
 
     elements.forEach(elem => {
       elem.addEventListener('click', e => {
+        if (true || !e.target || e.target.getAttribute('data-id') <= 0) {
+          Joomla.renderMessages([Joomla.Text._('PLG_SYSTEM_TOUR_COULD_NOT_LOAD_THE_TOUR')]);
+
+          return;
+        }
         tourWasSelected(e.target);
       });
     });

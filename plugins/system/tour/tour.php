@@ -179,6 +179,7 @@ class PlgSystemTour extends CMSPlugin implements SubscriberInterface
             Text::script('PLG_SYSTEM_TOUR_COMPLETE');
             Text::script('PLG_SYSTEM_TOUR_NEXT');
             Text::script('PLG_SYSTEM_TOUR_BACK');
+            Text::script('PLG_SYSTEM_TOUR_COULD_NOT_LOAD_THE_TOUR');
 
             // Load required assets
             $assets = $this->app->getDocument()->getWebAssetManager();
