@@ -92,7 +92,9 @@ foreach ($allTours as $extension => $tours) :
     $modalHtml[] = '<h4>' . Text::_($extension) . '</h4>';
     $modalHtml[] = '<ul class="list-unstyled">';
     foreach ($tours as $tour) :
-        $modalHtml[] = '<li class="button-start-guidedtour text-info" role="button" data-id="' . (int) $tour->id . '">' . htmlentities($tour->title) . '</li>';
+        $modalHtml[] = '<li>';
+        $modalHtml[] = '<a href="#" role="button" class="button-start-guidedtour text-info" data-id="' . (int) $tour->id . '">' . htmlentities($tour->title) . '</a>';
+        $modalHtml[] = '</li>';
     endforeach;
     $modalHtml[] = '</ul>';
     $modalHtml[] = '</div>';
