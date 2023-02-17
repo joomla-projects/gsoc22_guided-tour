@@ -42,7 +42,7 @@ INSERT INTO "#__guidedtours" ("id", "asset_id", "title", "description", "orderin
 (8, 0, 'COM_GUIDEDTOURS_TOUR_CONTACTS_TITLE', 'COM_GUIDEDTOURS_TOUR_CONTACTS_DESCRIPTION', 8, '[\"*\"]', 'administrator/index.php?option=com_contact&view=contacts', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 1),
 (9, 0, 'COM_GUIDEDTOURS_TOUR_NEWSFEEDS_TITLE', 'COM_GUIDEDTOURS_TOUR_NEWSFEEDS_DESCRIPTION', 9, '[\"*\"]', 'administrator/index.php?option=com_newsfeeds&view=newsfeeds', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 1),
 (10, 0, 'COM_GUIDEDTOURS_TOUR_SMARTSEARCH_TITLE', 'COM_GUIDEDTOURS_TOUR_SMARTSEARCH_DESCRIPTION', 10, '[\"*\"]', 'administrator/index.php?option=com_finder&view=filters', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 1),
-(11, 0, 'COM_GUIDEDTOURS_TOUR_USERS_TITLE', 'COM_GUIDEDTOURS_TOUR_USERS_DESCRIPTION', 11, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 1);
+(11, 0, 'COM_GUIDEDTOURS_TOUR_USERS_TITLE', 'COM_GUIDEDTOURS_TOUR_USERS_DESCRIPTION', 11, '[\"*\"]', 'administrator/index.php?option=com_users&view=users', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP, 0, NULL, 0, 1, '*', 1)
 ON CONFLICT DO NOTHING;
 
 SELECT setval('#__guidedtours_id_seq', 12, false);
