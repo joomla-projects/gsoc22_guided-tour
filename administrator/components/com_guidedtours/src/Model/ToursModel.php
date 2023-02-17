@@ -106,7 +106,7 @@ class ToursModel extends ListModel
      *
      * @since  __DEPLOY_VERSION__
      */
-    protected function populateState($ordering = 'a.ordering', $direction = 'asc')
+    protected function populateState($ordering = 'a.ordering', $direction = 'ASC')
     {
         $app = Factory::getApplication();
         $extension = $app->getUserStateFromRequest($this->context . '.filter.extension', 'extension', null, 'cmd');

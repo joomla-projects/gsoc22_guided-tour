@@ -117,7 +117,7 @@ class StepsModel extends ListModel
      *
      * @since __DEPLOY_VERSION__
      */
-    protected function populateState($ordering = 'a.id', $direction = 'asc')
+    protected function populateState($ordering = 'a.ordering', $direction = 'ASC')
     {
         $app = Factory::getApplication();
 
@@ -255,7 +255,7 @@ class StepsModel extends ListModel
         }
 
         // Add the list ordering clause.
-        $orderCol  = $this->state->get('list.ordering', 'a.id');
+        $orderCol  = $this->state->get('list.ordering', 'a.ordering');
         $orderDirn = $this->state->get('list.direction', 'ASC');
 
         $query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
