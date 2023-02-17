@@ -245,7 +245,7 @@ class ToursModel extends ListModel
 
         // Filter on the language, or all.
         if ($language = $this->getState('filter.language')) {
-            $language = ['*', $language];
+            $language = (array) $language;
 
             $query->whereIn($db->quoteName('a.language'), $language, ParameterType::STRING);
         }
