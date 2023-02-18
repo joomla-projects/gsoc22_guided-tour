@@ -16,7 +16,7 @@ function instantiateTour() {
       cancelIcon: {
         enabled: true,
       },
-      classes: 'class-1 class-2 shepherd-theme-arrows',
+      classes: 'shepherd-theme-arrows',
       scrollTo: {
         behavior: 'smooth',
         block: 'center',
@@ -27,11 +27,19 @@ function instantiateTour() {
   });
 }
 
+function addProgressIndicator(step_element, index, total) {
+  const header = step_element.querySelector('.shepherd-header');
+  let progress = document.createElement('span');
+  progress.classList.add('shepherd-progress');
+  progress.innerText = `${index}/${total}`;
+  header.insertBefore(progress, step_element.querySelector('.shepherd-cancel-icon'));
+}
+
 function addStepToTourButton(tour, obj, index, buttons) {
   tour.addStep({
     title: obj.steps[index].title,
     text: obj.steps[index].description,
-    classes: 'intro-step shepherd-theme-arrows',
+    classes: 'shepherd-theme-arrows',
     attachTo: {
       element: obj.steps[index].target,
       on: obj.steps[index].position,
@@ -40,31 +48,33 @@ function addStepToTourButton(tour, obj, index, buttons) {
       interactive_type: obj.steps[index].interactive_type,
     },
     buttons: buttons,
-    id: obj.steps[index].ordering,
+    id: obj.steps[index].id,
     arrow: true,
     when: {
       show() {
         const currentStepIndex = `${tour.currentStep.id}`;
         sessionStorage.setItem('currentStepId', String(currentStepIndex));
-        const theElement = this.getElement();
-        if (theElement) {
-          theElement.focus = () => {
 
-              const tabbed_elements = document.querySelectorAll('[tabindex]');
-              tabbed_elements.forEach(function(elt) {
-                  elt.setAttribute('tabindex', '-1');
-              });
+        const step_element = this.getElement();
 
-              tour.currentStep.getTarget().focus();
-              tour.currentStep.getTarget().tabIndex = 1;
+        addProgressIndicator(step_element, parseInt(currentStepIndex) + 1, sessionStorage.getItem('stepCount'));
 
-              const popup_buttons = tour.currentStep.getElement().querySelectorAll('.shepherd-content button');
-              popup_buttons.forEach(function(elt, index) {
-                  //elt.setAttribute('tabindex', popup_buttons.length + 1 - index); // loose tab on 'back'
-                  elt.setAttribute('tabindex', index + 2);
-              });
+        if (step_element) {
+          step_element.focus = () => {
+            const tabbed_elements = document.querySelectorAll('[tabindex]');
+            tabbed_elements.forEach(function(elt) {
+                elt.setAttribute('tabindex', '-1');
+            });
+
+            tour.currentStep.getTarget().focus();
+            tour.currentStep.getTarget().tabIndex = 1;
+
+            const popup_buttons = tour.currentStep.getElement().querySelectorAll('.shepherd-content button');
+            popup_buttons.forEach(function(elt, index) {
+              elt.setAttribute('tabindex', popup_buttons.length + 1 - index); // loose tab on 'back'
+            });
           }
-      }
+        }
         if (obj.steps[index].type === 1) {
           checkAndRedirect(Joomla.getOptions('system.paths').rootFull + tour.currentStep.options.attachTo.url);
         }
@@ -91,13 +101,23 @@ function addInitialStepToTourButton(tour, obj) {
       },
     ],
     id: 0,
+    when: {
+      show() {
+        const currentStepIndex = `${tour.currentStep.id}`;
+        sessionStorage.setItem('currentStepId', String(currentStepIndex));
+
+        const stepCount = this.getTour().steps.length;
+        sessionStorage.setItem('stepCount', String(stepCount));
+
+        addProgressIndicator(this.getElement(), 1, stepCount);
+      },
+    },
   });
 }
 
 function addCancelTourEvent(tour) {
   tour.on('cancel', () => {
-    sessionStorage.removeItem('currentStepId');
-    sessionStorage.removeItem('tourId');
+    emptyStorage();
     const url = `${Joomla.getOptions('system.paths').rootFull}administrator/index.php?option=com_ajax&plugin=tour&group=system&format=raw&method=post&tour_id=-1`;
     fetch(
       url,
@@ -152,7 +172,7 @@ function enableButton(event) {
   element.removeAttribute('disabled');
 }
 
-function CreateAndStartTour(obj) {
+function createAndStartTour(obj) {
   const currentStepId = sessionStorage.getItem('currentStepId');
   let prevStep = '';
   const tour = instantiateTour();
@@ -239,6 +259,12 @@ function tourWasSelected(element) {
   }
 }
 
+function emptyStorage() {
+  sessionStorage.removeItem('currentStepId');
+  sessionStorage.removeItem('stepCount');
+  sessionStorage.removeItem('tourId');
+}
+
 Joomla = window.Joomla || {};
 
 ((Joomla, document) => {
@@ -251,7 +277,7 @@ Joomla = window.Joomla || {};
     if (currentURL !== uri + event.detail.url) {
       window.location.href = uri + event.detail.url;
     } else {
-      CreateAndStartTour(event.detail);
+      createAndStartTour(event.detail);
     }
   });
 
@@ -260,16 +286,14 @@ Joomla = window.Joomla || {};
     if (tourId) {
       const myTour = Joomla.getOptions('myTour');
       if (myTour) {
-        CreateAndStartTour(JSON.parse(myTour));
+        createAndStartTour(JSON.parse(myTour));
       } else {
-        sessionStorage.removeItem('currentStepId');
-        sessionStorage.removeItem('tourId');
+        emptyStorage();
       }
     }
 
     // Opt-in Start buttons
     const elements = document.querySelectorAll('.button-start-guidedtour');
-
     elements.forEach(elem => {
       elem.addEventListener('click', e => {
         tourWasSelected(e.target);
