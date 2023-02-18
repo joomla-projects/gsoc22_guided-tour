@@ -9,8 +9,11 @@
     <authorUrl>www.joomla.org</authorUrl>
     <version>4.3.0</version>
     <description>PLG_SYSTEM_TOUR_DESCRIPTION</description>
+	<namespace path="src">Joomla\Plugin\System\Tour</namespace>
     <files>
         <filename plugin="tour">tour.php</filename>
+		<folder>services</folder>
+		<folder>src</folder>
     </files>
     <languages>
         <language tag="en-GB">language/en-GB/plg_system_tour.ini</language>
