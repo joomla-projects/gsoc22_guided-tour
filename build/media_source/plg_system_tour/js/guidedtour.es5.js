@@ -10,8 +10,8 @@ function checkAndRedirect(redirectUrl) {
   }
 }
 
-function instantiateTour() {
-  return new Shepherd.Tour({
+function getTourInstance() {
+  const tour = new Shepherd.Tour({
     defaultStepOptions: {
       cancelIcon: {
         enabled: true,
@@ -25,6 +25,15 @@ function instantiateTour() {
     useModalOverlay: true,
     keyboardNavigation: true,
   });
+
+  tour.on('cancel', () => {
+    sessionStorage.removeItem('currentStepId');
+    sessionStorage.removeItem('tourId');
+
+    tour.steps = [];
+  });
+
+  return tour;
 }
 
 function addStepToTourButton(tour, obj, index, buttons) {
@@ -44,8 +53,7 @@ function addStepToTourButton(tour, obj, index, buttons) {
     arrow: true,
     when: {
       show() {
-        const currentStepIndex = `${tour.currentStep.id}`;
-        sessionStorage.setItem('currentStepId', String(currentStepIndex));
+        sessionStorage.setItem('currentStepId', index);
         const theElement = this.getElement();
         if (theElement) {
           theElement.focus = () => {
@@ -73,7 +81,7 @@ function addStepToTourButton(tour, obj, index, buttons) {
   });
 }
 
-function addInitialStepToTourButton(tour, obj) {
+function showTourInfo(tour, obj) {
   tour.addStep({
     title: obj.title,
     text: obj.description,
@@ -91,22 +99,6 @@ function addInitialStepToTourButton(tour, obj) {
       },
     ],
     id: 0,
-  });
-}
-
-function addCancelTourEvent(tour) {
-  tour.on('cancel', () => {
-    sessionStorage.removeItem('currentStepId');
-    sessionStorage.removeItem('tourId');
-    const url = `${Joomla.getOptions('system.paths').rootFull}administrator/index.php?option=com_ajax&plugin=tour&group=system&format=raw&method=post&tour_id=-1`;
-    fetch(
-      url,
-      {
-        method: 'GET',
-      },
-    )
-      .catch((error) => console.error(error));
-    tour.steps = [];
   });
 }
 
@@ -131,7 +123,7 @@ function pushNextButton(buttons, tour, stepId, disabled = false) {
   });
 }
 
-function pushBackButton(buttons, tour, prevStep) {
+function addBackButton(buttons, tour, prevStep) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_TOUR_BACK'),
     classes: 'shepherd-button-secondary',
@@ -151,24 +143,53 @@ function enableButton(event) {
   const element = document.querySelector(`.step-next-button-${event.currentTarget.step_id}`);
   element.removeAttribute('disabled');
 }
+function disableButton(event) {
+  const element = document.querySelector(`.step-next-button-${event.currentTarget.step_id}`);
+  element.setAttribute('disabled', 'disabled');
+}
 
-function CreateAndStartTour(obj) {
+function startTour(obj) {
+  // We store the tour id to restart on site refresh
+  sessionStorage.setItem('tourId', obj.id);
+
+  // Try to continue
   const currentStepId = sessionStorage.getItem('currentStepId');
   let prevStep = '';
-  const tour = instantiateTour();
-  let ind = 0;
-  if (currentStepId) {
-    ind = obj.steps.findIndex((x) => x.id === Number(currentStepId));
-    if (ind < 0) {
-      return;
-    }
+
+  let ind = -1;
+
+  if (currentStepId != null && Number(currentStepId) > -1) {
+    ind = typeof obj.steps[currentStepId] != 'undefined' ? Number(currentStepId) : -1;
+    // When we have more than one step, we save the previous step
     if (ind > 0) {
       prevStep = obj.steps[ind - 1];
     }
-  } else {
-    addInitialStepToTourButton(tour, obj);
   }
 
+  // Start tour building
+  const tour = getTourInstance();
+
+  // No step found, let's start from the beginning
+  if (ind < 0) {
+
+    sessionStorage.removeItem('currentStepId');
+
+    // First check for redirect
+    const uri = Joomla.getOptions('system.paths').rootFull;
+    const currentURL = window.location.href;
+
+    if (currentURL !== uri + obj.url) {
+      window.location.href = uri + obj.url;
+
+      return;
+    }
+
+    // Show info
+    showTourInfo(tour, obj);
+    ind = 0;
+  }
+
+  // Now let's add all follow up steps
   const len = obj.steps.length;
   let buttons;
 
@@ -176,7 +197,8 @@ function CreateAndStartTour(obj) {
   for (let index = ind; index < len; index++) {
     buttons = [];
 
-    pushBackButton(buttons, tour, prevStep);
+    // If we have at least done one step, let's allow a back step
+    addBackButton(buttons, tour, prevStep);
 
     if (
       obj
@@ -185,17 +207,38 @@ function CreateAndStartTour(obj) {
     ) {
       const ele = document.querySelector(obj.steps[index].target);
       if (ele) {
-        if (obj && obj.steps[index].interactive_type === 2) {
-          ele.step_id = index;
-          ele.addEventListener('input', enableButton, enableButton);
-        }
-        if (obj && obj.steps[index].interactive_type === 1) {
-          ele.addEventListener('click', tour.next, tour.next);
+        if (obj && obj.steps && obj.steps[index] && obj.steps[index].interactive_type) {
+          switch (obj.steps[index].interactive_type) {
+            case 1:
+              ele.addEventListener('click', () => {
+                sessionStorage.setItem('currentStepId', index + 1);
+              });
+              break;
+
+            case 2:
+              ele.step_id = index;
+              ele.addEventListener('input', event => {
+                if (event.target.value.trim().length) {
+                  enableButton(event);
+                }
+                else {
+                  disableButton(event);
+                }
+              });
+              break;
+
+            case 3:
+              break;
+
+            case 4:
+              tour.next();
+              break;
+          }
         }
       }
     }
 
-    if (index !== len - 1) {
+    if (index < len) {
       let disabled = false;
       if (obj && obj.steps[index].interactive_type === 2) {
         disabled = true;
@@ -214,29 +257,8 @@ function CreateAndStartTour(obj) {
     addStepToTourButton(tour, obj, index, buttons);
     prevStep = obj.steps[index];
   }
-  addCancelTourEvent(tour);
-  tour.start();
-}
 
-function tourWasSelected(element) {
-  if (element.getAttribute('data-id') > 0) {
-    const url = `${Joomla.getOptions('system.paths').rootFull}administrator/index.php?option=com_ajax&plugin=tour&group=system&format=raw&method=post&tour_id=${element.getAttribute('data-id')}`;
-    fetch(
-      url,
-      {
-        method: 'GET',
-      },
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        if (Object.keys(json).length > 0) {
-          document.dispatchEvent(new CustomEvent('GuidedTourLoaded', { bubbles: true, detail: json }));
-        }
-      })
-      .catch((error) => console.error(error));
-  } else {
-    console.log('tour: no data-id');
-  }
+  tour.start();
 }
 
 Joomla = window.Joomla || {};
@@ -244,33 +266,26 @@ Joomla = window.Joomla || {};
 ((Joomla, document) => {
   'use strict';
 
-  document.addEventListener('GuidedTourLoaded', (event) => {
-    sessionStorage.setItem('tourId', event.detail.id);
-    const uri = Joomla.getOptions('system.paths').rootFull;
-    const currentURL = window.location.href;
-    if (currentURL !== uri + event.detail.url) {
-      window.location.href = uri + event.detail.url;
-    } else {
-      CreateAndStartTour(event.detail);
-    }
-  });
-
   document.addEventListener('DOMContentLoaded', () => {
 
-    function startTour(tourId) {
+    function loadTour(tourId) {
       if (tourId > 0) {
+          const url = `${Joomla.getOptions('system.paths').rootFull}administrator/index.php?option=com_ajax&plugin=tour&group=system&format=json&id=${tourId}`;
+          fetch(url)
+          .then((response) => response.json())
+          .then((result) => {
+          if (!result.success) {
+            if (result.messages) {
+              Joomla.renderMessages(result.messages);
+            }
 
-      }
-    }
-
-    const tourId = sessionStorage.getItem('tourId');
-    if (tourId) {
-      const myTour = Joomla.getOptions('myTour');
-      if (myTour) {
-        CreateAndStartTour(JSON.parse(myTour));
-      } else {
-        sessionStorage.removeItem('currentStepId');
-        sessionStorage.removeItem('tourId');
+            // Kill all tours if we can't find it
+            sessionStorage.removeItem('currentStepId');
+            sessionStorage.removeItem('tourId');
+          }
+          startTour(result.data);
+          })
+          .catch((error) => console.error(error));
       }
     }
 
@@ -279,13 +294,20 @@ Joomla = window.Joomla || {};
 
     elements.forEach(elem => {
       elem.addEventListener('click', e => {
-        if (true || !e.target || e.target.getAttribute('data-id') <= 0) {
+        if (!e.target || e.target.getAttribute('data-id') <= 0) {
           Joomla.renderMessages([Joomla.Text._('PLG_SYSTEM_TOUR_COULD_NOT_LOAD_THE_TOUR')]);
 
           return;
         }
-        tourWasSelected(e.target);
+        loadTour(e.target.getAttribute('data-id'));
       });
     });
+
+    // Start a given tour
+    const tourId = sessionStorage.getItem('tourId');
+
+    if (tourId > 0) {
+      loadTour(tourId);
+    }
   });
 })(Joomla, document);
