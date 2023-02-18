@@ -3,10 +3,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-function checkAndRedirect(redirectUrl) {
-  const currentURL = window.location.href;
-  if (currentURL !== redirectUrl) {
-    window.location.href = redirectUrl;
+function checkAndRedirect(redirect_url) {
+  const current_url = window.location.href;
+  if (current_url !== redirect_url) {
+    window.location.href = redirect_url;
   }
 }
 
@@ -52,29 +52,27 @@ function addStepToTourButton(tour, obj, index, buttons) {
     arrow: true,
     when: {
       show() {
-        const currentStepIndex = `${tour.currentStep.id}`;
-        sessionStorage.setItem('currentStepId', String(currentStepIndex));
+        const current_step_id = `${tour.currentStep.id}`;
+        sessionStorage.setItem('currentStepId', String(current_step_id));
 
         const step_element = this.getElement();
+        addProgressIndicator(step_element, parseInt(current_step_id) + 1, sessionStorage.getItem('stepCount'));
 
-        addProgressIndicator(step_element, parseInt(currentStepIndex) + 1, sessionStorage.getItem('stepCount'));
+        step_element.focus = () => {
+          const tabbed_elements = document.querySelectorAll('[tabindex]');
+          tabbed_elements.forEach(function(elt) {
+              elt.setAttribute('tabindex', '-1');
+          });
 
-        if (step_element) {
-          step_element.focus = () => {
-            const tabbed_elements = document.querySelectorAll('[tabindex]');
-            tabbed_elements.forEach(function(elt) {
-                elt.setAttribute('tabindex', '-1');
-            });
+          tour.currentStep.getTarget().focus();
+          tour.currentStep.getTarget().tabIndex = 1;
 
-            tour.currentStep.getTarget().focus();
-            tour.currentStep.getTarget().tabIndex = 1;
-
-            const popup_buttons = tour.currentStep.getElement().querySelectorAll('.shepherd-content button');
-            popup_buttons.forEach(function(elt, index) {
-              elt.setAttribute('tabindex', popup_buttons.length + 1 - index); // loose tab on 'back'
-            });
-          }
+          const popup_buttons = tour.currentStep.getElement().querySelectorAll('.shepherd-content button');
+          popup_buttons.forEach(function(elt, index) {
+            elt.setAttribute('tabindex', popup_buttons.length + 1 - index); // loose tab on 'back'
+          });
         }
+
         if (obj.steps[index].type === 1) {
           checkAndRedirect(Joomla.getOptions('system.paths').rootFull + tour.currentStep.options.attachTo.url);
         }
@@ -103,13 +101,13 @@ function addInitialStepToTourButton(tour, obj) {
     id: 0,
     when: {
       show() {
-        const currentStepIndex = `${tour.currentStep.id}`;
-        sessionStorage.setItem('currentStepId', String(currentStepIndex));
+        const current_step_id = `${tour.currentStep.id}`;
+        sessionStorage.setItem('currentStepId', String(current_step_id));
 
-        const stepCount = this.getTour().steps.length;
-        sessionStorage.setItem('stepCount', String(stepCount));
+        const step_count = this.getTour().steps.length;
+        sessionStorage.setItem('stepCount', String(step_count));
 
-        addProgressIndicator(this.getElement(), 1, stepCount);
+        addProgressIndicator(this.getElement(), 1, step_count);
       },
     },
   });
@@ -173,12 +171,12 @@ function enableButton(event) {
 }
 
 function createAndStartTour(obj) {
-  const currentStepId = sessionStorage.getItem('currentStepId');
+  const current_step_id = sessionStorage.getItem('currentStepId');
   let prevStep = '';
   const tour = instantiateTour();
   let ind = 0;
-  if (currentStepId) {
-    ind = obj.steps.findIndex((x) => x.id === Number(currentStepId));
+  if (current_step_id) {
+    ind = obj.steps.findIndex((x) => x.id === Number(current_step_id));
     if (ind < 0) {
       return;
     }
@@ -273,8 +271,8 @@ Joomla = window.Joomla || {};
   document.addEventListener('GuidedTourLoaded', (event) => {
     sessionStorage.setItem('tourId', event.detail.id);
     const uri = Joomla.getOptions('system.paths').rootFull;
-    const currentURL = window.location.href;
-    if (currentURL !== uri + event.detail.url) {
+    const current_url = window.location.href;
+    if (current_url !== uri + event.detail.url) {
       window.location.href = uri + event.detail.url;
     } else {
       createAndStartTour(event.detail);
@@ -282,11 +280,11 @@ Joomla = window.Joomla || {};
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    const tourId = sessionStorage.getItem('tourId');
-    if (tourId) {
-      const myTour = Joomla.getOptions('myTour');
-      if (myTour) {
-        createAndStartTour(JSON.parse(myTour));
+    const tour_id = sessionStorage.getItem('tourId');
+    if (tour_id) {
+      const my_tour = Joomla.getOptions('myTour');
+      if (my_tour) {
+        createAndStartTour(JSON.parse(my_tour));
       } else {
         emptyStorage();
       }
