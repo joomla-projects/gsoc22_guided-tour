@@ -92,6 +92,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $app = $this->getApplication();
 
         if ($app->isClient('administrator')) {
+            Text::script('JCANCEL');
             Text::script('PLG_SYSTEM_GUIDEDTOURS_START');
             Text::script('PLG_SYSTEM_GUIDEDTOURS_COMPLETE');
             Text::script('PLG_SYSTEM_GUIDEDTOURS_NEXT');
