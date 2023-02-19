@@ -42,7 +42,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'onAjaxTour'          => 'startTour',
+            'onAjaxGuidedtours'   => 'startTour',
             'onBeforeCompileHead' => 'onBeforeCompileHead'
         ];
     }
