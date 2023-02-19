@@ -313,17 +313,21 @@ Joomla = window.Joomla || {};
     }
 
     // Opt-in Start buttons
-    const elements = document.querySelectorAll('.button-start-guidedtour');
+    document.querySelector('body').addEventListener('click', event => {
 
-    elements.forEach(elem => {
-      elem.addEventListener('click', e => {
-        if (!e.target || e.target.getAttribute('data-id') <= 0) {
+      // Click somewhere else
+      if (!event.target || !event.target.classList.contains('button-start-guidedtour') || e.target.getAttribute('data-id') <= 0) {
+          return;
+      }
+
+      // Click button but missing data-id
+      if (typeof e.target.getAttribute('data-id') == 'undefined' || e.target.getAttribute('data-id') <= 0) {
           Joomla.renderMessages([Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COULD_NOT_LOAD_THE_TOUR')]);
 
           return;
-        }
-        loadTour(e.target.getAttribute('data-id'));
-      });
+      }
+
+      loadTour(e.target.getAttribute('data-id'));
     });
 
     // Start a given tour
