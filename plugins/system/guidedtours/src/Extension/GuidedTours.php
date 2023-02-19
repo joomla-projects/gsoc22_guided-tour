@@ -95,11 +95,11 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
 
         if ($app->isClient('administrator')) {
 
-            Text::script('PLG_SYSTEM_TOUR_START');
-            Text::script('PLG_SYSTEM_TOUR_COMPLETE');
-            Text::script('PLG_SYSTEM_TOUR_NEXT');
-            Text::script('PLG_SYSTEM_TOUR_BACK');
-            Text::script('PLG_SYSTEM_TOUR_COULD_NOT_LOAD_THE_TOUR');
+            Text::script('PLG_SYSTEM_GUIDEDTOURS_START');
+            Text::script('PLG_SYSTEM_GUIDEDTOURS_COMPLETE');
+            Text::script('PLG_SYSTEM_GUIDEDTOURS_NEXT');
+            Text::script('PLG_SYSTEM_GUIDEDTOURS_BACK');
+            Text::script('PLG_SYSTEM_GUIDEDTOURS_COULD_NOT_LOAD_THE_TOUR');
 
             // Load required assets
             $app->getDocument()->getWebAssetManager()
