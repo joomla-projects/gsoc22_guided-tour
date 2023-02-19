@@ -316,7 +316,7 @@ Joomla = window.Joomla || {};
     document.querySelector('body').addEventListener('click', event => {
 
       // Click somewhere else
-      if (!event.target || !event.target.classList.contains('button-start-guidedtour') || e.target.getAttribute('data-id') <= 0) {
+      if (!event.target || !event.target.classList.contains('button-start-guidedtour')) {
           return;
       }
 
