@@ -168,7 +168,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         foreach ($steps as $i => $step) {
             $temp = new \stdClass();
 
-            $step->id = $i + 1;
+            $temp->id = $i + 1;
             $temp->title = Text::_($step->title);
             $temp->description = Text::_($step->description);
             $temp->position = $step->position;
