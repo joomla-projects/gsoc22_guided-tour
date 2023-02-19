@@ -98,6 +98,16 @@ function addStepToTourButton(tour, obj, index, buttons) {
         element: obj.steps[index].target,
         on: obj.steps[index].position,
         url: obj.steps[index].url,
+        type: obj.steps[index].type,
+        interactive_type: obj.steps[index].interactive_type,
+      },
+    });
+  } else {
+    step.updateStepOptions({
+      attachTo: {
+        url: obj.steps[index].url,
+        type: obj.steps[index].type,
+        interactive_type: obj.steps[index].interactive_type,
       },
     });
   }
@@ -193,7 +203,7 @@ function startTour(obj) {
 
   // Try to continue
   const currentStepId = sessionStorage.getItem('currentStepId');
-  let prevStep = '';
+  let prevStep = null;
 
   let ind = -1;
 
@@ -237,7 +247,9 @@ function startTour(obj) {
     buttons = [];
 
     // If we have at least done one step, let's allow a back step
-    addBackButton(buttons, tour, prevStep);
+    if (prevStep === null || prevStep.target === '' || (prevStep.target && document.querySelector(prevStep.target) !== null)) {
+      addBackButton(buttons, tour, prevStep);
+    }
 
     if (
       obj
