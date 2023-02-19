@@ -68,7 +68,7 @@ function addStepToTourButton(tour, obj, index, buttons) {
       show() {
         sessionStorage.setItem('currentStepId', index);
         const theElement = this.getElement();
-        addProgressIndicator(theElement, index + 1, sessionStorage.getItem('stepCount'));
+        addProgressIndicator(theElement, tour.currentStep.id + 1, sessionStorage.getItem('stepCount'));
 
         theElement.focus = () => {
 
@@ -261,7 +261,7 @@ function startTour(obj) {
       }
     }
 
-    if (index < len) {
+    if (index < len - 1) {
       let disabled = false;
       if (obj && obj.steps[index].interactive_type === 2) {
         disabled = true;
