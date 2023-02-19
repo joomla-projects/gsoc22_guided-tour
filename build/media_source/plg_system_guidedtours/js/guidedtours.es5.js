@@ -247,7 +247,7 @@ function startTour(obj) {
     buttons = [];
 
     // If we have at least done one step, let's allow a back step
-    if (prevStep === null || prevStep.target === '' || (prevStep.target && document.querySelector(prevStep.target) !== null)) {
+    if (prevStep === null || index !== ind) {
       addBackButton(buttons, tour, prevStep);
     }
 
