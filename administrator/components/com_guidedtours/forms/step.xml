@@ -117,8 +117,9 @@
 		filter="string"
 		validate="options"
 		>
-		<option value="1">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_BUTTON_LABEL</option>
+		<option value="1">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_FORM_SUBMIT_LABEL</option>
 		<option value="2">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_TEXT_FIELD_LABEL</option>
+		<option value="4">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_BUTTON_LABEL</option>
 		<option value="3">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_OTHER_LABEL</option>
 	</field>
 
