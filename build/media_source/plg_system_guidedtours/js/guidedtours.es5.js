@@ -15,6 +15,7 @@ function getTourInstance() {
     defaultStepOptions: {
       cancelIcon: {
         enabled: true,
+        label: Joomla.Text._('JCANCEL'),
       },
       classes: 'shepherd-theme-arrows',
       scrollTo: {
@@ -50,17 +51,10 @@ function addProgressIndicator(stepElement, index, total) {
 }
 
 function addStepToTourButton(tour, obj, index, buttons) {
-  tour.addStep({
+  let step = new Shepherd.Step(tour, {
     title: obj.steps[index].title,
     text: obj.steps[index].description,
     classes: 'shepherd-theme-arrows',
-    attachTo: {
-      element: obj.steps[index].target,
-      on: obj.steps[index].position,
-      url: obj.steps[index].url,
-      type: obj.steps[index].type,
-      interactive_type: obj.steps[index].interactive_type,
-    },
     buttons: buttons,
     id: obj.steps[index].id,
     arrow: true,
@@ -70,6 +64,10 @@ function addStepToTourButton(tour, obj, index, buttons) {
         const theElement = this.getElement();
         addProgressIndicator(theElement, tour.currentStep.id + 1, sessionStorage.getItem('stepCount'));
 
+        if (obj.steps[index].type === 1) {
+          checkAndRedirect(Joomla.getOptions('system.paths').rootFull + tour.currentStep.options.attachTo.url);
+        }
+
         theElement.focus = () => {
 
           const tabbed_elements = document.querySelectorAll('[tabindex]');
@@ -77,21 +75,42 @@ function addStepToTourButton(tour, obj, index, buttons) {
             elt.setAttribute('tabindex', '-1');
           });
 
-          tour.currentStep.getTarget().focus();
-          tour.currentStep.getTarget().tabIndex = 1;
+          let tabIndex = 0;
+          const target = tour.currentStep.getTarget();
+
+          if (target) {
+            target.focus();
+            target.tabIndex = ++tabIndex;
+          }
 
           const popup_buttons = tour.currentStep.getElement().querySelectorAll('.shepherd-content button');
           popup_buttons.forEach(function(elt, index) {
-            elt.setAttribute('tabindex', popup_buttons.length + 1 - index); // loose tab on 'back'
+            elt.setAttribute('tabindex', popup_buttons.length + tabIndex - index); // loose tab on 'back'
           });
-        }
-
-        if (obj.steps[index].type === 1) {
-          checkAndRedirect(Joomla.getOptions('system.paths').rootFull + tour.currentStep.options.attachTo.url);
         }
       },
     },
   });
+
+  if (obj.steps[index].target) {
+    step.updateStepOptions({
+      attachTo: {
+        element: obj.steps[index].target,
+        on: obj.steps[index].position,
+        url: obj.steps[index].url,
+      },
+    });
+  }
+
+  if (obj.steps[index].type !== 0) {
+    // Remove stored key to prevent pages to open in the wrong tab
+    const storageKey = Joomla.getOptions('system.paths').root + '/' + obj.steps[index].url;
+    if (sessionStorage.getItem(storageKey)) {
+      sessionStorage.removeItem(storageKey);
+    }
+  }
+
+  tour.addStep(step);
 }
 
 function showTourInfo(tour, obj) {
@@ -106,7 +125,6 @@ function showTourInfo(tour, obj) {
           return tour.next();
         },
         text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_START'),
-        label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_START'),
       },
     ],
     id: 0,
@@ -126,7 +144,6 @@ function showTourInfo(tour, obj) {
 function pushCompleteButton(buttons, tour) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COMPLETE'),
-    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COMPLETE'),
     classes: 'shepherd-button-primary',
     action: function () {
       return tour.cancel();
@@ -137,7 +154,6 @@ function pushCompleteButton(buttons, tour) {
 function pushNextButton(buttons, tour, stepId, disabled = false) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_NEXT'),
-    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_NEXT'),
     classes: `shepherd-button-primary step-next-button-${stepId}`,
     action: function () {
       return tour.next();
@@ -149,7 +165,6 @@ function pushNextButton(buttons, tour, stepId, disabled = false) {
 function addBackButton(buttons, tour, prevStep) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_BACK'),
-    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_BACK'),
     classes: 'shepherd-button-secondary',
     action: function () {
       if (prevStep) {
@@ -313,17 +328,21 @@ Joomla = window.Joomla || {};
     }
 
     // Opt-in Start buttons
-    const elements = document.querySelectorAll('.button-start-guidedtour');
+    document.querySelector('body').addEventListener('click', event => {
 
-    elements.forEach(elem => {
-      elem.addEventListener('click', e => {
-        if (!e.target || e.target.getAttribute('data-id') <= 0) {
-          Joomla.renderMessages([Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COULD_NOT_LOAD_THE_TOUR')]);
+      // Click somewhere else
+      if (!event.target || !event.target.classList.contains('button-start-guidedtour')) {
+        return;
+      }
 
-          return;
-        }
-        loadTour(e.target.getAttribute('data-id'));
-      });
+      // Click button but missing data-id
+      if (typeof event.target.getAttribute('data-id') == 'undefined' || event.target.getAttribute('data-id') <= 0) {
+        Joomla.renderMessages([Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COULD_NOT_LOAD_THE_TOUR')]);
+
+        return;
+      }
+
+      loadTour(event.target.getAttribute('data-id'));
     });
 
     // Start a given tour
