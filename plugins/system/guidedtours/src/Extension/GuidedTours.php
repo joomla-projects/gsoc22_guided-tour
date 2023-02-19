@@ -59,7 +59,6 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $app = $this->getApplication();
 
         if (!$app->isClient('administrator')) {
-
             return null;
         }
 
@@ -69,7 +68,6 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $tour = null;
 
         if ($tourId > 0) {
-
             $tour = $this->getTour($tourId);
 
             if (!empty($tour->id)) {
@@ -77,7 +75,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
             }
         }
 
-        $event->setArgument('result', $tour ?? new \stdClass);
+        $event->setArgument('result', $tour ?? new \stdClass());
 
         return $tour;
     }
@@ -94,7 +92,6 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $app = $this->getApplication();
 
         if ($app->isClient('administrator')) {
-
             Text::script('PLG_SYSTEM_GUIDEDTOURS_START');
             Text::script('PLG_SYSTEM_GUIDEDTOURS_COMPLETE');
             Text::script('PLG_SYSTEM_GUIDEDTOURS_NEXT');
@@ -169,8 +166,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $tour->steps = [];
 
         foreach ($steps as $i => $step) {
-
-            $temp = new \stdClass;
+            $temp = new \stdClass();
 
             $step->id = $i + 1;
             $temp->title = Text::_($step->title);
