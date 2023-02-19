@@ -55,12 +55,10 @@ class GuidedToursHelper
         $items = $tours->getItems();
 
         foreach ($items as $key => $item) {
-
             // The user can only see the tours of extensions that are allowed.
             $uri = new Uri($item->url);
 
             if ($extension = $uri->getVar('option')) {
-
                 if (!$user->authorise('core.manage', $extension)) {
                     unset($items[$key]);
                 }
