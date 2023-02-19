@@ -8,7 +8,7 @@
     <authorEmail>admin@joomla.org</authorEmail>
     <authorUrl>www.joomla.org</authorUrl>
     <version>4.3.0</version>
-    <description>PLG_SYSTEM_TOUR_DESCRIPTION</description>
+    <description>PLG_SYSTEM_GUIDEDTOURS_DESCRIPTION</description>
 	<namespace path="src">Joomla\Plugin\System\GuidedTours</namespace>
     <files>
         <filename plugin="guidedtours">guidedtours.php</filename>
