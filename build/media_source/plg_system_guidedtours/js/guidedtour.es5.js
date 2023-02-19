@@ -99,9 +99,6 @@ function showTourInfo(tour, obj) {
     title: obj.title,
     text: obj.description,
     classes: 'shepherd-theme-arrows',
-    attachTo: {
-      on: 'bottom',
-    },
     buttons: [
       {
         classes: 'shepherd-button-primary',
