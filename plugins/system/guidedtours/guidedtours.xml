@@ -11,7 +11,6 @@
     <description>PLG_SYSTEM_GUIDEDTOURS_DESCRIPTION</description>
 	<namespace path="src">Joomla\Plugin\System\GuidedTours</namespace>
     <files>
-        <filename plugin="guidedtours">guidedtours.php</filename>
 		<folder>services</folder>
 		<folder>src</folder>
     </files>
