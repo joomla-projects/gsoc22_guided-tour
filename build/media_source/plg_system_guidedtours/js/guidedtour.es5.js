@@ -109,6 +109,7 @@ function showTourInfo(tour, obj) {
           return tour.next();
         },
         text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_START'),
+        label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_START'),
       },
     ],
     id: 0,
@@ -128,6 +129,7 @@ function showTourInfo(tour, obj) {
 function pushCompleteButton(buttons, tour) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COMPLETE'),
+    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_COMPLETE'),
     classes: 'shepherd-button-primary',
     action: function () {
       return tour.cancel();
@@ -138,6 +140,7 @@ function pushCompleteButton(buttons, tour) {
 function pushNextButton(buttons, tour, stepId, disabled = false) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_NEXT'),
+    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_NEXT'),
     classes: `shepherd-button-primary step-next-button-${stepId}`,
     action: function () {
       return tour.next();
@@ -149,6 +152,7 @@ function pushNextButton(buttons, tour, stepId, disabled = false) {
 function addBackButton(buttons, tour, prevStep) {
   buttons.push({
     text: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_BACK'),
+    label: Joomla.Text._('PLG_SYSTEM_GUIDEDTOURS_BACK'),
     classes: 'shepherd-button-secondary',
     action: function () {
       if (prevStep) {
