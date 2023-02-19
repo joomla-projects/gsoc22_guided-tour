@@ -465,21 +465,21 @@ class TourModel extends AdminModel
                         $db->quoteName('note')]);
                 foreach ($rows as $step) {
                     $dataTypes = [
-                        ParameterType::INTEGER,//t
-                        ParameterType::STRING,//t
-                        ParameterType::STRING,//des
-                        ParameterType::INTEGER,//ord
-                        ParameterType::STRING,//pos
-                        ParameterType::STRING,//targ
-                        ParameterType::INTEGER,//type
-                        ParameterType::INTEGER,// int ty
-                        ParameterType::STRING,//url
-                        ParameterType::STRING,//creat
-                        ParameterType::INTEGER,//creat by
-                        ParameterType::STRING, // mod
-                        ParameterType::INTEGER, // modby
-                        ParameterType::STRING,//lan
-                        ParameterType::STRING,//note
+                        ParameterType::INTEGER,
+                        ParameterType::STRING,
+                        ParameterType::STRING,
+                        ParameterType::INTEGER,
+                        ParameterType::STRING,
+                        ParameterType::STRING,
+                        ParameterType::INTEGER,
+                        ParameterType::INTEGER,
+                        ParameterType::STRING,
+                        ParameterType::STRING,
+                        ParameterType::INTEGER,
+                        ParameterType::STRING,
+                        ParameterType::INTEGER,
+                        ParameterType::STRING,
+                        ParameterType::STRING,
                     ];
                     $query->values(implode(',', $query->bindArray([$table->id,
                         $step->title,
