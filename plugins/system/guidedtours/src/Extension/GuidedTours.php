@@ -44,7 +44,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
     protected $stepType = [
         GuidedtoursComponent::STEP_NEXT        => 'next',
         GuidedtoursComponent::STEP_REDIRECT    => 'redirect',
-        GuidedtoursComponent::STEP_INTERACTIVE => 'interactive'
+        GuidedtoursComponent::STEP_INTERACTIVE => 'interactive',
     ];
 
     /**
@@ -57,7 +57,7 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         GuidedtoursComponent::STEP_INTERACTIVETYPE_FORM_SUBMIT => 'submit',
         GuidedtoursComponent::STEP_INTERACTIVETYPE_TEXT        => 'text',
         GuidedtoursComponent::STEP_INTERACTIVETYPE_OTHER       => 'other',
-        GuidedtoursComponent::STEP_INTERACTIVETYPE_BUTTON      => 'button'
+        GuidedtoursComponent::STEP_INTERACTIVETYPE_BUTTON      => 'button',
     ];
 
     /**
