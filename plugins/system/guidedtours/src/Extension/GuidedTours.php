@@ -41,7 +41,11 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
      * @var    string[]
      * @since  __DEPLOY_VERSION__
      */
-    protected $stepType = [GuidedtoursComponent::STEP_NEXT => 'next', GuidedtoursComponent::STEP_REDIRECT => 'redirect', GuidedtoursComponent::STEP_INTERACTIVE => 'interactive'];
+    protected $stepType = [
+        GuidedtoursComponent::STEP_NEXT => 'next',
+        GuidedtoursComponent::STEP_REDIRECT => 'redirect',
+        GuidedtoursComponent::STEP_INTERACTIVE => 'interactive'
+    ];
 
     /**
      * A mapping for the step interactive types
@@ -49,7 +53,12 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
      * @var    string[]
      * @since  __DEPLOY_VERSION__
      */
-    protected $stepInteractiveType = [GuidedtoursComponent::STEP_INTERACTIVETYPE_FORM_SUBMIT => 'submit', GuidedtoursComponent::STEP_INTERACTIVETYPE_TEXT => 'text', GuidedtoursComponent::STEP_INTERACTIVETYPE_OTHER => 'other', GuidedtoursComponent::STEP_INTERACTIVETYPE_BUTTON => 'button'];
+    protected $stepInteractiveType = [
+        GuidedtoursComponent::STEP_INTERACTIVETYPE_FORM_SUBMIT => 'submit',
+        GuidedtoursComponent::STEP_INTERACTIVETYPE_TEXT => 'text',
+        GuidedtoursComponent::STEP_INTERACTIVETYPE_OTHER => 'other',
+        GuidedtoursComponent::STEP_INTERACTIVETYPE_BUTTON => 'button'
+    ];
 
     /**
      * function for getSubscribedEvents : new Joomla 4 feature
