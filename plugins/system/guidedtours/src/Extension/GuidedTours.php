@@ -35,6 +35,22 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
     protected $autoloadLanguage = true;
 
     /**
+     * A mapping for the step types
+     *
+     * @var    string[]
+     * @since  __DEPLOY_VERSION__
+     */
+    protected $stepType = [0 => 'next', 1 => 'redirect', 2 => 'interactive'];
+
+    /**
+     * A mapping for the step interactive types
+     *
+     * @var    string[]
+     * @since  __DEPLOY_VERSION__
+     */
+    protected $stepInteractiveType = [1 => 'submit', 2 => 'text', 3 => 'other', 4 => 'button'];
+
+    /**
      * function for getSubscribedEvents : new Joomla 4 feature
      *
      * @return array
@@ -174,8 +190,8 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
             $temp->description = Text::_($step->description);
             $temp->position = $step->position;
             $temp->target = $step->target;
-            $temp->type = $step->type;
-            $temp->interactive_type = $step->interactive_type;
+            $temp->type = $this->stepType[$step->type];
+            $temp->interactive_type = $this->stepInteractiveType[$step->interactive_type];
             $temp->url = $step->url;
 
             // Replace 'images/' to '../images/' when using an image from /images in backend.
