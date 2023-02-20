@@ -138,13 +138,6 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $tour = new \stdClass();
 
         $tour->id = $item->id;
-        $tour->title = Text::_($item->title);
-        $tour->description = Text::_($item->description);
-
-        // Replace 'images/' to '../images/' when using an image from /images in backend.
-        $tour->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $tour->description);
-
-        $tour->url = $item->url;
 
         $stepsModel = $factory->createModel(
             'Steps',
@@ -160,6 +153,18 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         $steps = $stepsModel->getItems();
 
         $tour->steps = [];
+
+        $temp = new \stdClass();
+
+        $temp->id = 0;
+        $temp->title = Text::_($item->title);
+        $temp->description = Text::_($item->description);
+        $temp->url = $item->url;
+
+        // Replace 'images/' to '../images/' when using an image from /images in backend.
+        $temp->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $temp->description);
+
+        $tour->steps[] = $temp;
 
         foreach ($steps as $i => $step) {
             $temp = new \stdClass();
