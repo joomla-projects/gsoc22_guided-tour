@@ -46,11 +46,11 @@ if (empty($tour_id)) {
     <?php endif; ?>
 
     <div class="main-card">
-        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
+        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
 
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', empty($this->item->id) ? Text::_('COM_GUIDEDTOURS_STEP_NEW_STEP') : Text::_('COM_GUIDEDTOURS_STEP_EDIT_STEP')); ?>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-lg-9">
                 <?php echo $this->form->renderField('description'); ?>
 
                 <?php if ($this->item->id != 0 && strpos($this->item->description, 'GUIDEDTOUR') !== false) : ?>
@@ -71,6 +71,7 @@ if (empty($tour_id)) {
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
+
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'publishing', Text::_('JGLOBAL_FIELDSET_PUBLISHING')); ?>
         <div class="row">
             <div class="col-12 col-lg-8">
@@ -84,16 +85,7 @@ if (empty($tour_id)) {
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('COM_GUIDEDTOURS_RULES_TAB')); ?>
-        <div class="row">
-            <fieldset id="fieldset-rules" class="options-form">
-                <legend><?php echo Text::_('COM_GUIDEDTOURS_RULES_TAB'); ?></legend>
-                <?php echo $this->form->getInput('rules'); ?>
-            </fieldset>
-            <?php echo HTMLHelper::_('uitab.endTab'); ?>
-            <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
-        </div>
-
+        <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
     </div>
     <input type="hidden" name="task" value="">
     <input type="hidden" name="tour_id" value="<?php echo $tour_id; ?>">

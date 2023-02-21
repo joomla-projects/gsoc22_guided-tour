@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form addfieldprefix="Joomla\Component\Guidedtours\Administrator\Field">
-
+	<config>
+		<inlinehelp button="show"/>
+	</config>
 	<field
 		name="id"
 		type="text"
@@ -14,14 +16,15 @@
 		name="position"
 		type="list"
 		label="COM_GUIDEDTOURS_STEP_POSITION_LABEL"
+		default="center"
 		description="COM_GUIDEDTOURS_STEP_POSITION_DESC"
 		validate="options"
         >
-		<option value="bottom">COM_GUIDEDTOURS_FIELD_VALUE_BOTTOM</option>
-		<option value="center">COM_GUIDEDTOURS_FIELD_VALUE_CENTER</option>
-		<option value="left">COM_GUIDEDTOURS_FIELD_VALUE_LEFT</option>
-		<option value="right">COM_GUIDEDTOURS_FIELD_VALUE_RIGHT</option>
-		<option value="top">COM_GUIDEDTOURS_FIELD_VALUE_TOP</option>
+		<option value="bottom">JGLOBAL_BOTTOM</option>
+		<option value="center">JGLOBAL_CENTER</option>
+		<option value="left">JGLOBAL_LEFT</option>
+		<option value="right">JGLOBAL_RIGHT</option>
+		<option value="top">JGLOBAL_TOP</option>
 	</field>
 
 	<field
@@ -92,9 +95,9 @@
 		description="COM_GUIDEDTOURS_STEP_TYPE_DESC"
 		validate="options"
 		>
-		<option value="0">COM_GUIDEDTOURS_FIELD_VALUE_NEXT_STEP</option>
-		<option value="1">COM_GUIDEDTOURS_FIELD_VALUE_REDIRECT</option>
-		<option value="2">COM_GUIDEDTOURS_FIELD_VALUE_INTERACTIVE_STEP</option>
+		<option value="0">COM_GUIDEDTOURS_FIELD_VALUE_STEP_TYPE_NEXT</option>
+		<option value="1">COM_GUIDEDTOURS_FIELD_VALUE_STEP_TYPE_REDIRECT</option>
+		<option value="2">COM_GUIDEDTOURS_FIELD_VALUE_STEP_TYPE_INTERACTIVE</option>
 	</field>
 
 	<field
@@ -110,14 +113,15 @@
 		name="interactive_type"
 		type="list"
 		label="COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_LABEL"
-		description="COM_GUIDEDTOURS_INTERACTIVE_STEP_DESC"
+		description="COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_DESC"
 		showon="type:2"
 		filter="string"
 		validate="options"
 		>
-		<option value="1">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_BUTTON_LABEL</option>
-		<option value="2">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_TEXT_FIELD_LABEL</option>
-		<option value="3">COM_GUIDEDTOURS_TYPE_INTERACTIVE_STEP_OTHER_LABEL</option>
+		<option value="1">COM_GUIDEDTOURS_FIELD_VALUE_INTERACTIVESTEP_TYPE_FORM_SUBMIT</option>
+		<option value="2">COM_GUIDEDTOURS_FIELD_VALUE_INTERACTIVESTEP_TYPE_TEXT_FIELD</option>
+		<option value="4">COM_GUIDEDTOURS_FIELD_VALUE_INTERACTIVESTEP_TYPE_BUTTON</option>
+		<option value="3">COM_GUIDEDTOURS_FIELD_VALUE_INTERACTIVESTEP_TYPE_OTHER</option>
 	</field>
 
 	<field
@@ -184,24 +188,5 @@
 		label="COM_GUIDEDTOURS_FIELD_NOTE_LABEL"
 		maxlength="255"
 	/>
-
-	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL">
-		<field
-			name="asset_id"
-			type="hidden"
-			filter="unset"
-		/>
-
-		<field
-			name="rules"
-			type="rules"
-			label="JFIELD_RULES_LABEL"
-			translate_label="false"
-			filter="rules"
-			validate="rules"
-			component="com_guidedtours"
-			section="step"
-		/>
-	</fieldset>
 
 </form>

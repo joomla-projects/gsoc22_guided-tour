@@ -42,11 +42,11 @@ $wa->useScript('keepalive')
     <?php endif; ?>
 
     <div class="main-card">
-        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'details')); ?>
+        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', ['active' => 'details', 'recall' => true, 'breakpoint' => 768]); ?>
 
         <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', empty($this->item->id) ? Text::_('COM_GUIDEDTOURS_NEW_TOUR') : Text::_('COM_GUIDEDTOURS_EDIT_TOUR')); ?>
         <div class="row">
-            <div class="col-lg">
+            <div class="col-lg-9">
                 <?php echo $this->form->renderField('url'); ?>
                 <?php echo $this->form->renderField('description'); ?>
 
@@ -56,13 +56,9 @@ $wa->useScript('keepalive')
                 <?php endif; ?>
             </div>
 
-            <div class="col-md-3">
-                <div class="card card-light">
-                    <div class="card-body">
-                        <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-                        <?php echo $this->form->renderField('extensions'); ?>
-                    </div>
-                </div>
+            <div class="col-lg-3">
+                <?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
+                <?php echo $this->form->renderField('extensions'); ?>
             </div>
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -80,16 +76,16 @@ $wa->useScript('keepalive')
         </div>
         <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('COM_GUIDEDTOURS_RULES_TAB')); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'permissions', Text::_('JCONFIG_PERMISSIONS_LABEL')); ?>
         <div class="row">
             <fieldset id="fieldset-rules" class="options-form">
-                <legend><?php echo Text::_('COM_GUIDEDTOURS_RULES_TAB'); ?></legend>
+                <legend><?php echo Text::_('JCONFIG_PERMISSIONS_LABEL'); ?></legend>
                 <?php echo $this->form->getInput('rules'); ?>
             </fieldset>
-            <?php echo HTMLHelper::_('uitab.endTab'); ?>
-            <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
         </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
+        <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
     </div>
 
     <input type="hidden" name="task" value="">
