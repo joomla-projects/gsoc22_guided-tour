@@ -258,7 +258,7 @@ final class Joomla extends CMSPlugin
 
         list($extension, $view, $id) = explode('.', $context);
 
-        // Check if there is alrady a schema for the item, then skip it
+        // Check if there is already a schema for the item, then skip it
         $mySchema = $schema->toArray();
 
         if (!isset($mySchema['@graph']) || !is_array($mySchema['@graph'])) {
@@ -275,7 +275,7 @@ final class Joomla extends CMSPlugin
             }
         }
 
-        $additionalSchema = [];
+        $additionalSchemas = [];
 
         $component = $this->getApplication()->bootComponent('com_content')->getMVCFactory();
 
@@ -286,7 +286,7 @@ final class Joomla extends CMSPlugin
 
         // Add article data
         if ($view == 'article' && $id > 0) {
-            $additionalSchema = $cache->get(function ($id) use ($component, $baseId) {
+            $additionalSchemas = $cache->get(function ($id) use ($component, $baseId) {
                 $model = $component->createModel('Article', 'Site');
 
                 $article = $model->getItem($id);
@@ -301,12 +301,14 @@ final class Joomla extends CMSPlugin
 
                 $articleSchema['isPartOf'] = ['@id' => $baseId . 'WebPage/base'];
 
-                return $articleSchema;
+                return [$articleSchema];
             }, [$id]);
         } elseif (in_array($view, ['category', 'featured', 'archive'])) {
-            $additionalSchema = $cache->get(function ($view, $id) use ($component, $baseId, $app, $db) {
+            $additionalSchemas = $cache->get(function ($view, $id) use ($component, $baseId, $app, $db) {
                 $menu = $app->getMenu()->getActive();
                 $schemaId = $baseId . 'com_content/' . $view . ($view == 'category' ? '/' . $id : '');
+
+                $additionalSchemas = [];
 
                 $additionalSchema = [
                     '@type'    => 'Blog',
@@ -327,8 +329,6 @@ final class Joomla extends CMSPlugin
                 $articleIds = ArrayHelper::getColumn($articles, 'id');
 
                 if (!empty($articleIds)) {
-                    $query = $db->getQuery(true);
-
                     $aContext = 'com_content.article';
 
                     // Load the schema data from the database
@@ -347,7 +347,9 @@ final class Joomla extends CMSPlugin
 
                             $localSchema->set('@id', $baseId . str_replace('.', '/', $aContext) . '/' . (int) $article->id);
 
-                            $additionalSchema['blogPost'][] = $localSchema->toArray();
+                            $additionalSchema['blogPost'][] = ['@id' => $localSchema->get('@id')];
+
+                            $additionalSchemas[] = $localSchema->toArray();
 
                             continue;
                         }
@@ -360,14 +362,20 @@ final class Joomla extends CMSPlugin
                         // Set to BlogPosting
                         $articleSchema['@type'] = 'BlogPosting';
 
-                        $additionalSchema['blogPost'][] = $articleSchema;
+                        $additionalSchemas[] = $articleSchema;
+
+                        $additionalSchema['blogPost'][] = ['@id' => $articleSchema['@id']];
                     }
                 }
+
+                array_unshift($additionalSchemas, $additionalSchema);
+
+                return $additionalSchemas;
             }, [$view, $id]);
         }
 
-        if (!empty($additionalSchema)) {
-            $mySchema['@graph'][] = $additionalSchema;
+        if (!empty($additionalSchemas)) {
+            $mySchema['@graph'] = array_merge($mySchema['@graph'], $additionalSchemas);
         }
 
         $schema->set('@graph', $mySchema['@graph']);
@@ -475,7 +483,7 @@ final class Joomla extends CMSPlugin
 
         list($extension, $view, $id) = explode('.', $context);
 
-        // Check if there is alrady a schema for the item, then skip it
+        // Check if there is already a schema for the item, then skip it
         $mySchema = $schema->toArray();
 
         if (!isset($mySchema['@graph']) || !is_array($mySchema['@graph'])) {

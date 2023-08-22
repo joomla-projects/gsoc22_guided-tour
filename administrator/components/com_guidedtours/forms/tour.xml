@@ -27,10 +27,19 @@
 	/>
 
 	<field
+		name="alias"
+		type="text"
+		label="COM_GUIDEDTOURS_TOUR_ALIAS_LABEL"
+		description="COM_GUIDEDTOURS_TOUR_ALIAS_DESC"
+		hint="COM_GUIDEDTOURS_TOUR_ALIAS_HINT"
+		required="false"
+	/>
+
+	<field
 		name="description"
 		type="editor"
 		label="JGLOBAL_DESCRIPTION"
-		filter="JComponentHelper::filterText"
+		filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 		buttons="true"
 		hide="readmore,pagebreak,module,menu,fields,contact,article"
 	/>
@@ -39,7 +48,7 @@
 		name="description_translation"
 		type="editor"
 		label="JGLOBAL_DESCRIPTION"
-		filter="JComponentHelper::filterText"
+		filter="\Joomla\CMS\Component\ComponentHelper::filterText"
 		buttons="false"
 		readonly="true"
 	/>

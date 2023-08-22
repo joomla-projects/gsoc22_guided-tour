@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <form>
 	<fields name="schema">
 		<fieldset
@@ -11,7 +11,7 @@
 				showon="schemaType:Event"
 			>
 				<form>
-					
+
 					<field
 						name="@type"
 						type="hidden"
@@ -37,7 +37,6 @@
 						label="PLG_SCHEMAORG_EVENT_FIELD_NAME_LABEL"
 						filter="string"
 						size="30"
-
 					/>
 
 					<field
@@ -45,7 +44,6 @@
 						type="text"
 						label="PLG_SCHEMAORG_EVENT_FIELD_DESCRIPTION_LABEL"
 						filter="string"
-
 					/>
 
 					<field
@@ -65,7 +63,6 @@
 								type="number"
 								label="PLG_SCHEMAORG_EVENT_FIELD_RATING_VALUE_LABEL"
 								max="5"
-
 							/>
 							<field
 								name="reviewCount"
@@ -82,7 +79,7 @@
 						label="PLG_SCHEMAORG_EVENT_FIELD_START_DATE_LABEL"
 						class="input-small"
 						filter="user_utc"
-						showtime="false" 
+						showtime="false"
 						todaybutton="true"
 						format="%Y-%m-%d"
 					/>
@@ -103,7 +100,7 @@
 							<field
 								name="name"
 								type="text"
-								label="PLG_SCHEMAORG_EVENT_FIELD_NAME_LABEL"
+								label="PLG_SCHEMAORG_EVENT_FIELD_LOCATION_NAME_LABEL"
 							/>
 
 							<field
@@ -112,7 +109,7 @@
 								label="PLG_SCHEMAORG_EVENT_FIELD_ADDRESS_LABEL"
 							>
 								<form>
-									
+
 									<field
 										name="@type"
 										type="hidden"
@@ -138,7 +135,7 @@
 									/>
 
 								</form>
-								
+
 							</field>
 						</form>
 					</field>
@@ -147,14 +144,13 @@
 						name="organizer"
 						type="subform"
 						label="PLG_SCHEMAORG_EVENT_FIELD_ORGANIZER_LABEL"
-
 						>
 						<form>
-							
+
 							<field
 								name="@type"
 								type="list"
-								label="Type"
+								label="PLG_SCHEMAORG_EVENT_FIELD_TYPE_LABEL"
 								default="person"
 								>
 								<option value="person">PLG_SCHEMAORG_EVENT_FIELD_PERSON_LABEL</option>
@@ -164,9 +160,8 @@
 							<field
 								name="name"
 								type="text"
-								label="PLG_SCHEMAORG_EVENT_FIELD_NAME_LABEL"
+								label="PLG_SCHEMAORG_EVENT_FIELD_ORGANIZER_NAME_LABEL"
 								filter="string"
-
 							/>
 
 							<field
@@ -175,13 +170,12 @@
 								label="PLG_SCHEMAORG_EVENT_FIELD_URL_LABEL"
 								filter="url"
 								validate="url"
-
 							/>
 
 							<field
 								name="logo"
 								type="subform"
-								label="logo"
+								label="PLG_SCHEMAORG_EVENT_FIELD_LOGO_LABEL"
 								showon="@type:organization"
 							>
 								<form>
@@ -206,7 +200,6 @@
 								type="email"
 								label="PLG_SCHEMAORG_EVENT_FIELD_EMAIL_LABEL"
 								validate="email"
-
 							/>
 
 							<field
@@ -215,7 +208,7 @@
 								label="PLG_SCHEMAORG_EVENT_FIELD_ADDRESS_LABEL"
 							>
 								<form>
-									
+
 									<field
 										name="@type"
 										type="hidden"
@@ -259,7 +252,6 @@
 								label="PLG_SCHEMAORG_EVENT_FIELD_GENERIC_TITLE_LABEL"
 								filter="string"
 								size="30"
-
 							/>
 							<field
 								name="genericValue"
@@ -267,10 +259,9 @@
 								label="PLG_SCHEMAORG_EVENT_FIELD_GENERIC_VALUE_LABEL"
 								filter="string"
 								size="30"
-
 							/>
 						</form>
-					
+
 					</field>
 
 				</form>

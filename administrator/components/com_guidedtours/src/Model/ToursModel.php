@@ -248,9 +248,13 @@ class ToursModel extends ListModel
     {
         $items = parent::getItems();
 
-        Factory::getLanguage()->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
+        $lang = Factory::getLanguage();
+        $lang->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
 
         foreach ($items as $item) {
+            if (!empty($item->alias)) {
+                $lang->load('com_guidedtours_' . str_replace('-', '_', $item->alias), JPATH_ADMINISTRATOR);
+            }
             $item->title       = Text::_($item->title);
             $item->description = Text::_($item->description);
             $item->extensions  = (new Registry($item->extensions))->toArray();

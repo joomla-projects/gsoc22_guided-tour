@@ -104,13 +104,22 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
      */
     public function startTour(Event $event)
     {
-        $tourId = (int) $this->getApplication()->getInput()->getInt('id');
+        $tourId    = (int) $this->getApplication()->getInput()->getInt('id');
+        $tourAlias = $this->getApplication()->getInput()->getString('alias');
+        $tourAlias = $tourAlias !== '' ? @urldecode($tourAlias) : $tourAlias;
 
-        $activeTourId = null;
-        $tour         = null;
+        $activeTourId    = null;
+        $activeTourAlias = null;
+        $tour            = null;
 
         if ($tourId > 0) {
             $tour = $this->getTour($tourId);
+
+            if (!empty($tour->id)) {
+                $activeTourId = $tour->id;
+            }
+        } elseif ($tourAlias !== '') {
+            $tour = $this->getTourByAlias($tourAlias);
 
             if (!empty($tour->id)) {
                 $activeTourId = $tour->id;
@@ -166,8 +175,6 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
     {
         $app = $this->getApplication();
 
-        $user = $app->getIdentity();
-
         $factory = $app->bootComponent('com_guidedtours')->getMVCFactory();
 
         $tourModel = $factory->createModel(
@@ -177,6 +184,51 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
         );
 
         $item = $tourModel->getItem($tourId);
+
+        return $this->processTour($item);
+    }
+
+    /**
+     * Get a tour and its steps or null if not found
+     *
+     * @param   integer  $tourId  The ID of the tour to load
+     *
+     * @return null|object
+     *
+     * @since   4.3.0
+     */
+    private function getTourByAlias(string $tourAlias)
+    {
+        $app = $this->getApplication();
+
+        $factory = $app->bootComponent('com_guidedtours')->getMVCFactory();
+
+        $tourModel = $factory->createModel(
+            'Tour',
+            'Administrator',
+            ['ignore_request' => true]
+        );
+
+        $item = $tourModel->getItemByAlias($tourAlias);
+
+        return $this->processTour($item);
+    }
+
+    /**
+     * Return a tour and its steps or null if not found
+     *
+     * @param   TourTable  $item  The tour to load
+     *
+     * @return null|object
+     *
+     * @since   5.0.0
+     */
+    private function processTour($item)
+    {
+        $app = $this->getApplication();
+
+        $user    = $app->getIdentity();
+        $factory = $app->bootComponent('com_guidedtours')->getMVCFactory();
 
         if (empty($item->id) || $item->published < 1 || !in_array($item->access, $user->getAuthorisedViewLevels())) {
             return null;
@@ -225,6 +277,8 @@ final class GuidedTours extends CMSPlugin implements SubscriberInterface
             $temp->type             = $this->stepType[$step->type];
             $temp->interactive_type = $this->stepInteractiveType[$step->interactive_type];
             $temp->url              = $step->url;
+            $temp->tour_id          = $step->tour_id;
+            $temp->step_id          = $step->id;
 
             // Replace 'images/' to '../images/' when using an image from /images in backend.
             $temp->description = preg_replace('*src\=\"(?!administrator\/)images/*', 'src="../images/', $temp->description);

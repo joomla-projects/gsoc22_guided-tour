@@ -10,13 +10,17 @@
 
 namespace Joomla\Component\Guidedtours\Administrator\Model;
 
+use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Log\Log;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Database\ParameterType;
+use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -77,24 +81,29 @@ class TourModel extends AdminModel
 
         $this->setStepsLanguage($id, $lang);
 
-        $result = parent::save($data);
-
-        // Create default step for new tour
-        if ($result && $input->getCmd('task') !== 'save2copy' && $this->getState($this->getName() . '.new')) {
-            $tourId = (int) $this->getState($this->getName() . '.id');
-
-            $table = $this->getTable('Step');
-
-            $table->id          = 0;
-            $table->title       = 'COM_GUIDEDTOURS_BASIC_STEP';
-            $table->description = '';
-            $table->tour_id     = $tourId;
-            $table->published   = 1;
-
-            $table->store();
+        if (empty($data['alias'])) {
+            $app        = Factory::getApplication();
+            $uri        = Uri::getInstance();
+            $host       = $uri->toString(['host']);
+            $aliasTitle = $host . ' ' . str_replace('COM_GUIDEDTOURS_TOUR_', '', $data['title']);
+            // Remove the last _TITLE part
+            if (str_ends_with($aliasTitle, '_TITLE')) {
+                $pos        = strrpos($aliasTitle, '_TITLE');
+                $aliasTitle = substr($aliasTitle, 0, $pos);
+            }
+            if ($app->get('unicodeslugs') == 1) {
+                $data['alias'] = OutputFilter::stringUrlUnicodeSlug($aliasTitle);
+            } else {
+                $data['alias'] = OutputFilter::stringURLSafe($aliasTitle);
+            }
+        } else {
+            $data['alias'] = ApplicationHelper::stringURLSafe($data['alias']);
         }
 
-        return $result;
+        // make sure the alias is unique
+        $data['alias'] = $this->generateNewAlias($data['alias'], $id);
+
+        return parent::save($data);
     }
 
     /**
@@ -212,13 +221,91 @@ class TourModel extends AdminModel
      */
     public function getItem($pk = null)
     {
-        Factory::getLanguage()->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
+        $lang = Factory::getLanguage();
+        $lang->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
 
         $result = parent::getItem($pk);
+
+        if (!empty($result->alias)) {
+            $lang->load('com_guidedtours_' . str_replace('-', '_', $result->alias), JPATH_ADMINISTRATOR);
+            $lang->load('com_guidedtours_' . str_replace('-', '_', $result->alias) . '_steps', JPATH_ADMINISTRATOR);
+        }
 
         if (!empty($result->id)) {
             $result->title_translation       = Text::_($result->title);
             $result->description_translation = Text::_($result->description);
+        }
+
+        if (empty($result->alias) && (int) $pk > 0) {
+            $app        = Factory::getApplication();
+            $uri        = Uri::getInstance();
+            $host       = $uri->toString(['host']);
+            $aliasTitle = $host . ' ' . str_replace('COM_GUIDEDTOURS_TOUR_', '', $result->title);
+            // Remove the last _TITLE part
+            if (str_ends_with($aliasTitle, '_TITLE')) {
+                $pos        = strrpos($aliasTitle, '_TITLE');
+                $aliasTitle = substr($aliasTitle, 0, $pos);
+            }
+            if ($app->get('unicodeslugs') == 1) {
+                $result->alias = OutputFilter::stringUrlUnicodeSlug($aliasTitle);
+            } else {
+                $result->alias = OutputFilter::stringURLSafe($aliasTitle);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Method to get a single record by alias
+     *
+     * @param   string  $alias  The alias of the tour.
+     *
+     * @return  CMSObject|boolean  Object on success, false on failure.
+     *
+     * @since   5.0.0
+     */
+    public function getItemByAlias($alias = '')
+    {
+        Factory::getLanguage()->load('com_guidedtours.sys', JPATH_ADMINISTRATOR);
+
+        $db     = $this->getDatabase();
+        $query  = $db->getQuery(true)
+        ->select($db->quoteName('id'))
+        ->from($db->quoteName('#__guidedtours'))
+        ->where($db->quoteName('alias') . ' = :alias')
+        ->bind(':alias', $alias, ParameterType::STRING);
+
+        $db->setQuery($query);
+        $pk = (int) $db->loadResult();
+
+        $result = parent::getItem($pk);
+
+        if (!empty($result->alias)) {
+            Factory::getLanguage()->load('com_guidedtours_' . str_replace('-', '_', $result->alias), JPATH_ADMINISTRATOR);
+        }
+
+        if (!empty($result->id)) {
+            $result->title_translation       = Text::_($result->title);
+            $result->description_translation = Text::_($result->description);
+        }
+
+        if (empty($result->alias) && (int) $pk > 0) {
+            $app        = Factory::getApplication();
+            $uri        = Uri::getInstance();
+            $host       = $uri->toString(['host']);
+
+            $aliasTitle = $host . ' ' . str_replace('COM_GUIDEDTOURS_TOUR_', '', $result->title);
+            // Remove the last _TITLE part
+            if (str_ends_with($result->title, '_TITLE')) {
+                $pos        = strrpos($aliasTitle, '_TITLE');
+                $aliasTitle = substr($aliasTitle, 0, $pos);
+            }
+            if ($app->get('unicodeslugs') == 1) {
+                $result->alias = OutputFilter::stringUrlUnicodeSlug($aliasTitle);
+            } else {
+                $result->alias = OutputFilter::stringURLSafe($aliasTitle);
+            }
         }
 
         return $result;
@@ -331,6 +418,7 @@ class TourModel extends AdminModel
                 $table->id = 0;
 
                 $table->published   = 0;
+                $table->alias       = '';
 
                 if (!$table->check() || !$table->store()) {
                     throw new \Exception($table->getError());
@@ -712,5 +800,31 @@ class TourModel extends AdminModel
 
         return $db->setQuery($query)
             ->execute();
+    }
+
+    /**
+     * Method to change the alias when not unique.
+     *
+     * @param   string   $alias           The alias.
+     * @param   integer  $currentItemId   The id of the current tour.
+     *
+     * @return  string $alias  Contains the modified alias.
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    protected function generateNewAlias($alias, $currentItemId)
+    {
+        $unique = false;
+        // Alter the title & alias
+        while (!$unique) {
+            $aliasItem = $this->getItemByAlias($alias);
+            if ($aliasItem->id > 0 && $aliasItem->id != $currentItemId) {
+                $alias = StringHelper::increment($alias, 'dash');
+            } else {
+                $unique = true;
+            }
+        }
+
+        return $alias;
     }
 }
